@@ -1,16 +1,45 @@
 #include <iostream>
+#include <array>
 using namespace std;
 
-int calc(int a, int b) {
+int add(int a, int b) {
     int sum;
 
     sum = a + b;
 
     cout << "The sum of of " << a << " and " << b << " is " << sum << endl;
     
-    return 0;
+    return sum;
 }
 
+int sub(int a, int b) {
+    int sub;
+
+    sub = a - b;
+
+    cout << "The subtraction of " << a <<  " and " << b << " is " << sub << endl;
+
+    return sub;
+}
+
+int mul(int a, int b) {
+    int mul;
+
+    mul = a * b;
+
+    cout << "The multipliation of " << a << " and " << b << "is " << mul << endl;
+
+    return mul;
+}
+
+int division(int a, int b) {
+    int divide;
+
+    divide = a / b;
+
+    cout << "The divison of " << a << " and " << b << "is " << divide << endl;
+    return divide;
+}
 int main(){
     int i, j;
 
@@ -20,7 +49,12 @@ int main(){
     cout << "Enter number two ";
     cin >> j;
 
-    calc(i, j);
+    
+    add(i, j);
+    sub(i, j);
+    mul(i, j);
+    division(i, j);
+
 
     return 0;
 
