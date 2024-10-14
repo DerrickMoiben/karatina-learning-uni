@@ -12,7 +12,7 @@ int  main(){
         cout << "They is no factorial for a negative number "<< n << endl;
     }
     else{
-        for(i = 1; i <= n; ++i){
+        for(i = 1; i <= n; i++){
             factorial *= i;
         }
         cout << "Factoial of " << n << " = " << factorial << endl;
