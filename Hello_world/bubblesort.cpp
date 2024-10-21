@@ -59,3 +59,11 @@ int main(){
 
     return 0;
 }
+
+
+//Time complexity
+
+// Summary of Time Complexity:
+// Best Case (already sorted): O(n)
+// Worst Case (reverse sorted): O(n²)
+// Average Case (random order): O(n²)
