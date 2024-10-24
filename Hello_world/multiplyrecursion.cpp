@@ -4,8 +4,8 @@ using namespace std;
 // Recursive function to multiply two numbers
 int multiply(int a, int b) {
     // Base cases
-    if (b == 0) return 0; // Any number multiplied by 0 is 0
-    if (b == 1) return a; // Any number multiplied by 1 is the number itself
+    if (b == 0) return 0;
+    if (b == 1) return a; 
 
     // Recursive case
     return a + multiply(a, b - 1);
