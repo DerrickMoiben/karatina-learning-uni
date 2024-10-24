@@ -1,6 +1,10 @@
 #include <iostream>
 using namespace std;
 
+
+// THs  fuction works like this 
+// fibrec(5) = fibrec(4) + fibrec(3)
+// fibrec(4) = fibrec(3) + fibrec(2)
 int fibrec(int n){
     if ( n == 0 ){
         return 0;
