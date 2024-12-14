@@ -8,7 +8,9 @@ int main() {
     cout << "Value of x: " << x << endl;
     cout << "Address of x: " << &x << endl;
     cout << "Value stored in ptr: " << ptr << endl;
+    // defrencing
     cout << "Value ptr is pointing to: " << *ptr << endl;
 
     return 0;
 }
+
