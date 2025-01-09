@@ -46,30 +46,80 @@ class Node{
 public:
     int value;
     Node* next;
+
+    Node(int number) {
+        number = value;
+        next =  nullptr;
+    }
 };
 
-void printlist(Node*n){
-    while (n != NULL)
-    {
-        /* code */
-        cout << n->value << endl;
-        n = n->next;
-    }
+// void printlist(Node*n){
+//     while (n != NULL)
+//     {
+//         /* code */
+//         cout << n->value << endl;
+//         n = n->next;
+//     }
 
     
-}
+// }
+
+class Linkedlist{
+    private:
+        Node* head;
+    public:
+        Linkedlist() {
+            head = nullptr;
+        }
+
+    void addvalue(int number) {
+        Node*  newNode = new Node(number);
+        if (head == nullptr) {
+            head = newNode;
+        } else {
+            Node* temp = head;
+            while (temp->next != nullptr) {
+                temp = temp->next;
+            }
+            temp->next =newNode;
+        }
+    }
+    void printlist() {
+        Node* temp = head;
+        while (temp != nullptr)
+        {
+            cout << temp->value << "->";
+            temp = temp->next;
+        }
+        cout << "NULL" << endl;
+        
+    }
+};
  
 int main(){
-    Node* head = new Node();
-    Node* second = new Node();
-    Node* third = new Node();
+//     Node* head = new Node();
+//     Node* second = new Node();
+//     Node* third = new Node();
 
-    head->value = 1;
-    head->next = second;
-    second->value = 2;
-    second->next = third;
-    third->value = 3;
-    third->next = NULL;
+//     head->value = 1;
+//     head->next = second;
+//     second->value = 2;
+//     second->next = third;
+//     third->value = 3;
+//     third->next = NULL;
 
-    printlist(head);
+//     printlist(head);
+// }
+
+
+
+    //linked list object
+    Linkedlist list;
+
+    list.addvalue(1);
+    list.addvalue(2);
+
+    list.printlist();
+
+    return 0;
 }
