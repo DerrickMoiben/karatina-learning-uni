@@ -15,6 +15,7 @@ int main() {
         break;
         default:
             printf("Thats not a recognized day in the days of the week/n");
+            break;
 
     }
 
