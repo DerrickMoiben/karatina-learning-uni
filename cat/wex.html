@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tymly - Barbershop Booking System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #333;
+            padding: 1rem 2rem;
+        }
+        nav .logo {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 1.5rem;
+        }
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.1rem;
+        }
+        nav ul li a:hover {
+            text-decoration: underline;
+        }
+        header {
+            background-image: url('https://example.com/barbershop.jpg');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 5rem 2rem;
+        }
+        header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        header .cta-button {
+            background-color: #ff6347;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.25rem;
+            cursor: pointer;
+        }
+        header .cta-button:hover {
+            background-color: #ff4500;
+        }
+        .services {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            padding: 2rem;
+            gap: 2rem;
+        }
+        .service-item {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 1rem;
+            text-align: center;
+            width: 30%;
+        }
+        .service-item img {
+            max-width: 100%;
+            border-radius: 8px;
+        }
+        .service-item h3 {
+            margin-top: 1rem;
+            color: #333;
+        }
+        .service-item p {
+            color: #666;
+        }
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 1rem 0;
+        }
+        footer .social-links a {
+            color: white;
+            margin: 0 0.5rem;
+            text-decoration: none;
+        }
+        footer .social-links a:hover {
+            text-decoration: underline;
+        }
+        footer .quick-links a {
+            color: white;
+            margin: 0 0.5rem;
+            text-decoration: none;
+        }
+        footer .quick-links a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <!-- Responsive Navbar -->
+<nav style="background-color: #333; padding: 10px;">
+    <ul style="list-style: none; display: flex; justify-content: space-around;">
+        <li><a href="#" style="color: white; text-decoration: none;">Home</a></li>
+        <li><a href="#" style="color: white; text-decoration: none;">About</a></li>
+        <li><a href="#" style="color: white; text-decoration: none;">Contact</a></li>
+    </ul>
+</nav>
+    <nav>
+        <div class="logo">Tymly</div>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+    <header id="home">
+        <h1>Book Your Next Haircut with Ease</h1>
+        <button class="cta-button">Book Now</button>
+    </header>
+    <section class="services" id="services">
+        <div class="service-item">
+            <img src="https://example.com/haircut.jpg" alt="Haircut">
+            <h3>Haircuts</h3>
+            <p>Expert haircuts tailored to your style.</p>
+        </div>
+        <div class="service-item">
+            <img src="https://example.com/shave.jpg" alt="Shave">
+            <h3>Shaves</h3>
+            <p>Professional shaves for a smooth finish.</p>
+        </div>
+        <div class="service-item">
+            <img src="https://example.com/styling.jpg" alt="Styling">
+            <h3>Styling</h3>
+            <p>Complete styling services for any occasion.</p>
+        </div>
+    </section>
+    <footer id="contact">
+        <div class="social-links">
+            <a href="#">Facebook</a> |
+            <a href="#">Instagram</a>
+        </div>
+        <div class="quick-links">
+            <a href="#">Privacy Policy</a> |
+            <a href="#">Terms of Service</a>
+        </div>
+        <p>Contact us at: contact@tymly.com</p>
+    </footer>
+</body>
+</html>
