@@ -1,0 +1,84 @@
+.nav {
+    background-color: teal;
+    padding: 10px;
+    
+}
+.nav ul {
+    list-style-type: none;
+    display: flex;
+    justify-content: center;
+    gap: 100px;
+    cursor: pointer;
+}
+.nav ul li a {
+    text-decoration: none;
+    color: white;
+    font-size: 24px;
+}
+.hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+.hero h1 {
+    text-align: center;
+}
+.hero p {
+    text-align: center;
+    color: black;
+    margin: 20px 0;
+}
+.hero-image {
+    display: flex;
+    justify-content: center;
+    margin: 50px 0;
+}
+.hero-image img {
+    border-radius: 50%;
+    width: 20%;
+    height: 80%;
+}
+.information {
+    padding: 20px;
+    text-align: center;
+
+}
+.information h2, p {
+    color: black;
+}
+.information table {
+    margin: 50px auto;
+    border-collapse: collapse;
+    width: 50%;
+}
+.information table th {
+    color: black;
+    padding: 10px;
+}
+.information table td {
+    color: black;
+    padding: 20px;
+    border: 10px solid black;
+}
+.footer {
+    background-color: teal;
+    color: white;
+    padding:10px;
+    
+}
+.footer {
+    background-color: teal;
+    color: white;
+    padding:10px;
+    
+}
+.footer .quick_links {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    font-size: 40px;
+}
+.footer p {
+    text-align: center;
+}
