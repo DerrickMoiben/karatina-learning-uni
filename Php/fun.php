@@ -15,7 +15,26 @@ echo "<br>";
 
 // this is an associative array in php
 
-$languages = array("kim" => "Python", "isa" => "javascript", "davis" => "php");
+$lang = array("kim" => "Python", "isa" => "javascript", "davis" => "php");
 
-echo "Kim is good in ".$languages["Kim"]."<br/>";
+echo "Kim is good in ".$lang['kim']."<br/>";
+echo "Davis is good in ".$lang['davis']."<br/>";
+
+
+// This is multidemensional array down here
+
+$marks = array
+(
+    array(1, "kim", 40000),
+    array(2, "isa", 70000),
+    array(3, "davis", 60000),
+);
+
+for ($row =  0; $row < 3; $row++) {
+    for ($col = 0; $col < 3; $col++) {
+        echo $marks[$row][$col]." ";
+    }
+    echo "<br/>";
+}
+
 ?>
