@@ -44,5 +44,38 @@
         <input type="submit" id="btn" value="login"><br>
     </form>
     </div>
+    <br>
+    <h3>fetching data from the databse</h3>
+    <table align="center" style="width: 300px;">
+        <tr>
+            <th>id</th>
+            <th>firstname</th>
+            <th>Lastname</th>
+            <th>Email</th>
+            <th>Phone</th>
+        </tr>
+        <?php
+        $conn = new mysqli("localhost", "phpuser", "P@ssword", "school");
+
+        if($conn->connect_error) {
+            die("Error in the Db connection: ".$conn->connect_errno.":".$conn->connect_error);
+        }
+        $select = "SELECT * FROM students ORDER BY id";
+
+        $result = $conn->query($select);
+
+        while ($row = mysqli_fetch_array($result)) {
+            ?>
+            <tr>
+                <td><?php echo $row["id"]; ?></td>
+                <td><?php echo $row["firstname"]; ?></td>
+                <td><?php echo $row["lastname"]; ?></td>
+                <td><?php echo $row["email"]; ?></td>
+                <td><?php echo $row["phone"]; ?></td>
+            </tr>
+        <?php
+        }
+        ?>
+    </table>
 </body>
 </html>
