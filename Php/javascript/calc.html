@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=H1, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Calculate Two fields</h1>
+    <h1 id="answer"></h1>
+
+    num 1 <input type="text" id="num1">
+    <br>
+    <br>
+    num 2 <input type="text" id="num2">
+    <br>
+    <br>
+    <button onclick="calculate()">Calculate</button>
+    <script>
+        function calculate(){
+            var field1=document.getElementById("num1").value;
+            var field2=document.getElementById("num2").value;
+            var result=parseFloat(field1)+parseFloat(field2);
+
+            if (! isNaN(result))
+        {
+            document.getElementById("answer").innerHTML="The answer is " + result;
+        }
+        }
+    </script>
+</body>
+</html>
