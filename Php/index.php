@@ -1,20 +1,11 @@
 <?php
-echo "hello world let try this php learning";
-echo "<br>";    
-echo "hello world let try this php learning";
-echo "<br>";
-echo "hello world let try this php learning";
 
-echo "<br>";
-$mkisi = "Purity Chumba Moiben";
-$age = 21;
-echo "My naem is $mkisi and I am $age years old  <br>";
+$str = "hello string";
+$x=200;
+$y=44.6;
 
-function sum() {
-    $a = 10;
-    $b = 40;
-    $c = $a + $b;
-    echo "The sum of $a and $b is $c <br>";
-}
-sum();
+echo "string is :$str <br>";
+echo "Integer is :$x  <br>";
+echo "Float is :$y <br>";
+
 ?>
