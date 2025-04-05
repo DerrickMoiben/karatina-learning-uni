@@ -8,19 +8,19 @@
 <body>
     <div class="product">
         <form action="upload.php" enctype="multipart/form-data" method="post">
-            <label for="Car name">Car Name</label><br>
+            <label for="carname">Car Name</label><br>
             <input type="text" name="carname" id="carname"><br>
 
             <label for="price">Car price</label><br>
-            <input type="text" name="price"  id="price"><br>
+            <input type="number" name="price"  id="price"><br>
 
             <label for="decription">description</label><br>
-            <input type="text" name="description" id="descriptiom"><br>
+            <textarea name="description" rows="4" cols="50" id=""></textarea>
 
-            <label for="image">Image</label><br>
-            <input type="file" name="image" id="image"><br>
+            <label for="image">upload Image</label><br>
+            <input accept=".jpeg, .jpg, .png" type="file" name="image" id="image"><br>
 
-            <input type="submit" value="Upload" name="submit"><br>
+           <button type="submit">Submit</button>
         </form>
     </div>
     
