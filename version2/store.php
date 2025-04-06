@@ -31,4 +31,6 @@ if (move_uploaded_file($tmp, $target_file)) {
 }
 
 $conn->close();
+
+header("Location: inventory.php");
 ?>

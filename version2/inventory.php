@@ -30,15 +30,18 @@ $conn->close(); // Close the database connection
                         <strong>Name:</strong> <?php echo $image['name']; ?><br>
                         <strong>Price:</strong> $<?php echo $image['price']; ?><br>
                         <strong>Description:</strong> <?php echo $image['description']; ?><br>
-                        <form action="delete_image.php" method="post">
+                        <!-- <form action="delete_image.php" method="post">
                             <input type="hidden" name="image_id" value="<?php echo $image['id']; ?>">
                             <input type="submit" value="Delete" class="btn btn-danger">
+                        </form> -->
+                        <form action="add_to_cart.php" method="post">
+                            <input type="hidden" name="image_id" value="<?php echo $image['id']; ?>">
+                            <input type="submit" value="add to cart" class=" btn btn-cart"> 
                         </form>
                     </div>
                 </div>
             <?php endforeach; ?> <!-- End of loop -->
         </div>
-        <p>Data uploaded. <a href="upload.php">View Images</a></p>
     </div>
 </body>
 </html>

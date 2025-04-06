@@ -29,6 +29,7 @@ h2 {
     padding: 10px;
     width: 300px;
     text-align: center;
+    transition: transform 0.2s;
 }
 
 .card img {
@@ -56,7 +57,14 @@ h2 {
 .btn-danger {
     background-color: #d9534f;
 }
+.btn-cart {
+    background-color: green;
+}
 
 .btn-danger:hover {
     background-color: #c9302c;
+}
+
+.btn-cart:hover {
+    background-color: #5cb85c;
 }
