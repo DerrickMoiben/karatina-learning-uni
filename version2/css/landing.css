@@ -1,0 +1,485 @@
+body {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #333;
+    background-color: rgb(207, 217, 231);
+    margin: 0;
+    padding: 0;
+}
+
+nav {
+    background-color: rgb(207, 217, 231);
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    z-index: 1000;
+    padding: 1px 0;
+    margin: 60px 0;
+    border-radius: 50px;
+}
+
+nav ul {
+    display: flex;
+    justify-content: center;
+    gap: 70px;
+    list-style-type: none;
+    padding: 0;
+    text-decoration: none;
+    color: black;
+}
+
+nav ul li {
+    padding: 10px;
+    text-decoration: none;
+    color: black;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: black;
+}
+
+nav ul li:last-child {
+    background-color: rgb(243, 54, 6);
+    border-radius: 50px;
+    align-items: right;
+}
+
+.hero-section {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+.hero-section .hero-image img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+}
+
+.hero-section .hero-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    text-align: center;
+}
+
+.hero-section .hero-content h1 {
+    font-size: 3.5rem;
+    color: rgb(207, 217, 231);
+    margin-bottom: 100px;
+}
+
+.hero-section .hero-content p {
+    font-size: 1.5rem;
+    color: rgb(207, 217, 231);
+    margin-bottom: 80px;
+}
+
+.hero-section .hero-content button {
+    background-color: rgb(243, 54, 6);
+    color: rgb(207, 217, 231);
+    padding: 10px 20px;
+    border: lightblue;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    margin: 5px;
+}
+
+.hero-section .hero-content button:hover {
+    background-color: rgb(243, 54, 6);
+    color: rgb(207, 217, 231);
+}
+
+.about-section {
+    background-color: rgb(112, 10, 4);
+    width: 60%;
+    height: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    border-radius: 20px;
+    margin: 50px auto;
+    padding: 40px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    gap: 20px;
+}
+
+.about-section .about-content {
+    flex: 2;
+    color: black;
+    padding-right: 20px;
+    text-align: left;
+    gap: 40px;
+}
+
+.about-section .about-content h1,
+.about-section .about-content h3 {
+    display: flex;
+    align-items: center;
+}
+
+.about-section .about-content h1 i,
+.about-section .about-content h3 i {
+    margin-right: 10px;
+    color: rgb(20, 20, 20);
+}
+
+.about-section .about-content h1 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.about-section .about-content h3 {
+    font-size: 1.5rem;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.about-section .about-content p {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.about-section .about-image {
+    flex: 1;
+    max-width: 400px;
+    height: 500px;
+    overflow: hidden;
+    border-radius: 20px;
+    position: relative;
+}
+
+.about-section .about-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 20px;
+}
+
+.dream-car {
+    background-color: rgb(255, 240, 232);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 5% 0;
+    gap: 20px;
+}
+
+.dream-car .dream-car-content {
+    flex: 1;
+    color: black;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    text-align: left;
+    gap: 20px;
+    padding-right: 20px;
+}
+
+.dream-car .dream-car-content h1 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.dream-car .dream-car-content h3 {
+    font-size: 1.5rem;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.dream-car .dream-car-content p {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.dream-car .dream-car-image {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 500px;
+    width: 400px;
+    overflow: hidden;
+    position: relative;
+    border-radius: 20px;
+}
+
+.dream-car .dream-car-image img {
+    width: 70%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 20px;
+    transition: transform 0.3s ease;
+}
+
+.dream-car .dream-car-image img:hover {
+    transform: scale(1.05);
+}
+
+.dream-car .dream-car-content .btn {
+    background-color: rgb(243, 54, 6);
+    color: rgb(207, 217, 231);
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    margin: 5px;
+}
+.dream-car .dream-car-content .btn:hover {
+    background-color: rgb(200, 40, 5); /* Darker red on hover */
+}
+
+.what-our-customer-say {
+    background-color: rgb(255, 240, 232);
+    color: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.what-our-customer-say .customer-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin: 60px auto;
+}
+
+.what-our-customer-say .customer-body {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.what-our-customer-say .customer-body .customer-card {
+    background-color: rgb(112, 10, 4);
+    border-radius: 70px;
+    width: 300px;
+    height: 400px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.what-our-customer-say .customer-body .customer-card .customer-card-image {
+    flex: 1;
+    overflow: hidden;
+}
+
+.what-our-customer-say .customer-body .customer-card .customer-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 70px 70px 0 0;
+}
+
+.what-our-customer-say .customer-body .customer-card h3 {
+    font-size: 1.5rem;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.what-our-customer-say .customer-body .customer-card p {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.obtain-process {
+    background-color: rgb(255, 240, 232);
+    color: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 10%;
+}
+
+.obtain-process .obtain-process-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin: 80px auto;
+}
+
+.obtain-process .obtain-process-header h1 {
+    font-size: 2.5rem;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.obtain-process .obtain-process-header p {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.obtain-process .obtain-process-content {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: space-between;
+    gap: 100px;
+}
+
+.obtain-process .obtain-process-content .obtain-process-card {
+    background-color: rgb(255, 255, 255);
+    border-radius: 40px;
+    width: 400px;
+    height: 150px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.obtain-process .obtain-process-content .obtain-process-card h3 {
+    font-size: 1.5rem;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.obtain-process .obtain-process-content .obtain-process-card p {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.contact-us {
+    background-color: rgb(255, 255, 255);
+    color: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.contact-us .contact-us-header {
+    margin: 80px auto;
+}
+
+.contact-us .contact-us-header h1 {
+    font-size: 2.5rem;
+}
+
+.contact-us .contact-us-header p {
+    font-size: 1.2rem;
+    line-height: 1.6;
+}
+
+.contact-us .contact-us-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.contact-us-content h3 i {
+    background-color: rgb(112, 10, 4);
+    color: white;
+    padding: 10px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.contact-us-content h3 {
+    font-size: 1.5rem;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.contact-us-content p {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.footer {
+    background-color: rgb(255, 240, 232);
+    color: rgb(22, 7, 7);
+    padding: 20px 0;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.footer p {
+    font-size: 1rem;
+    margin: 0;
+    padding-bottom: 10px;
+}
+
+.footer .footer-row {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    gap: 50px;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.footer .quick-links ul,
+.footer .social-links ul {
+    flex-direction: row;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    text-align: left;
+}
+
+.footer .quick-links ul li,
+.footer .social-links ul li {
+    margin-bottom: 10px;
+}
+
+.footer .quick-links ul li a,
+.footer .social-links ul li a {
+    text-decoration: none;
+    font-size: 1rem;
+    transition: color 0.3s ease;
+}
+
+.footer .quick-links ul li a:hover,
+.footer .social-links ul li a:hover {
+    color: #f39c12;
+}
+
+.footer .social-links ul li a i {
+    font-size: 1.5rem;
+    margin-right: 10px;
+}
