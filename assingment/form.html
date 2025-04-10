@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="container">
+        <form action="" method="post" name="myForm" onsubmit="return ValidationForm()" >
+            <label for="name">Name</label><br>
+            <input type="text" name="name" id="name" required>
+            <br>
+
+            <label for="email">Email</label><br>
+            <input type="email" name="email" id="email">
+            <br>
+
+            <label for="password">Password</label><br>
+            <input type="password" name="password" id="password" required><br>
+
+            <label for="password1">Confirm Password</label><br>
+            <input type="password" name="password1" id="password1" required><br>
+
+            <input type="submit" value="Submit">
+
+        </form>
+    </div>
+
+   <script src="form.js"></script>
+
+</body>
+
+</html>
