@@ -61,4 +61,25 @@ df = pd.read_csv('cinema (1).csv')
 
 pd.options.display.max_rows = 9999
 
+
+
+
+#pandas - Analyzing DataFrames
+
+#Head methiod retuen the header  and a specified number of rows staturing from the top
+
+print(df.head(10))
+print(df.tail(10))
+
+print(df.info())
+
+#data cleaning 
+
+#data cleaning means fixing bad data in your  data set
+
+#returning  a new dataframe with no empty cells
+
+df.dropna(inplace= True)
+
 print(df.to_string())
+
