@@ -56,19 +56,21 @@ print(df.loc[["day1", "day2"]])
 
 
 #load a file of csv as a dataframe
+ 
 
 df = pd.read_csv('cinema (1).csv')
 
-pd.options.display.max_rows = 9999
+pd.options.display.max_rows = 10
 
+print(df)
 
 
 
 #pandas - Analyzing DataFrames
-
-#Head methiod retuen the header  and a specified number of rows staturing from the top
+# head methiod retuen the header  and a specified number of rows staturing from the top
 
 print(df.head(10))
+# #H
 print(df.tail(10))
 
 print(df.info())
