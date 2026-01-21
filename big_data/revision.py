@@ -75,3 +75,10 @@ df = pd.DataFrame({'Name': ['alice', 'bob', 'charlie'],
 df['new_score'] = df['Score'].apply(lambda x: x + 5)
 
 print(df)
+
+
+import pandas as pd 
+df = pd.DataFrame({'Name': ['alice', 'bob', 'charlie'], 
+                   'Score': [85, 92, 78]})
+
+print(df)

@@ -1,61 +1,60 @@
 #Qestion 1
-# import pandas as pd
-
-# df = pd.read_csv("Education_attainment.csv")
+import pandas as pd
+df = pd.read_csv("Education_attainment.csv")
 
 #question B                                                                                                                                               
 
-# print(df.head())
+print(df.head())
 
-# bach_1980 = df[(df['Year'] == 1980) & (df['Min degree'] == "bachelor's")]
+bach_1980 = df[(df['Year'] == 1980) & (df['Min degree'] == "bachelor's")]
 
-# women = bach_1980[bach_1980['Sex'] == 'F']['total'].values
-# men = bach_1980[bach_1980['Sex'] == 'M']['total'].values
+women = bach_1980[bach_1980['Sex'] == 'F']['total'].values
+men = bach_1980[bach_1980['Sex'] == 'M']['total'].values
 
-# print("Women (1980):", women)
-# print("Men   (1980):", men)
+print("Women (1980):", women)
+print("Men   (1980):", men)
 
 
 #qestion c                                
 
-# import pandas as pd
+import pandas as pd
 
-# df = pd.read_csv("Education_attainment.csv")
-# df['total'] = pd.to_numeric(df['total'], errors='coerce')
+df = pd.read_csv("Education_attainment.csv")
+df['total'] = pd.to_numeric(df['total'], errors='coerce')
 
-# b2000 = df[(df['Year'] == 2000) & (df['Min degree'].str.contains("bachel"))]['total'].mean()
-# b2010 = df[(df['Year'] == 2010) & (df['Min degree'].str.contains("bachel"))]['total'].mean()
+b2000 = df[(df['Year'] == 2000) & (df['Min degree'].str.contains("bachel"))]['total'].mean()
+b2010 = df[(df['Year'] == 2010) & (df['Min degree'].str.contains("bachel"))]['total'].mean()
 
-# print("2000:", b2000)
-# print("2010:", b2010)
-# print("Difference:", b2010 - b2000)
+print("2000:", b2000)
+print("2010:", b2010)
+print("Difference:", b2010 - b2000)
 
 #qestion d
-# import pandas as pd
+import pandas as pd
 
-# df = pd.read_csv('Education_attainment.csv')
+df = pd.read_csv('Education_attainment.csv')
 
-# df['total'] = pd.to_numeric(df['total'], errors='coerce')
+df['total'] = pd.to_numeric(df['total'], errors='coerce')
 
-# result = (
-#     df[df['Year'].between(2000, 2010)]
-#     .groupby('Min degree')['total']
-#     .mean()
-#     .sort_values(ascending=False)
-#     .head(2)
-# )
+result = (
+    df[df['Year'].between(2000, 2010)]
+    .groupby('Min degree')['total']
+    .mean()
+    .sort_values(ascending=False)
+    .head(2)
+)
 
-# print(result)
+print(result)
 
 
 #question e
-# import pandas as pd
+import pandas as pd
 
-# df = pd.read_csv("Education_attainment.csv")
-# df['total'] = pd.to_numeric(df['total'], errors='coerce')
+df = pd.read_csv("Education_attainment.csv")
+df['total'] = pd.to_numeric(df['total'], errors='coerce')
 
-# stats = df.describe()
-# print(stats)
+stats = df.describe()
+print(stats)
 
 
 #Question f(i)
