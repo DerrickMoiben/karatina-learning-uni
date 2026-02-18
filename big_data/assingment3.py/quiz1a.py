@@ -6,23 +6,23 @@ import pandas as pd
 # i. Read this data into Python Pandas as a DataFrame.
 # (2 marks)
 # # 
-# # df =  pd.read_csv('Stores.csv')
+df =  pd.read_csv('Stores.csv')
 # # 
-# # print(df.tail())
+df.info()
+print(df.tail())
 # # 
 # ii. Using apply, write a function to determine the totals for the values in each column and save
 # them in a new row called “Column_Totals”.
 # (3 marks)
-# # def calculate_colomn_totals(column):
-    # return column.sum()
+def calculate_colomn_totals(column):
+    return column.sum()
+
+column_totals = df.apply(calculate_colomn_totals)
+column_totals.name = "Column_Totals"
+df_with_totals = pd.concat([df, pd.DataFrame([column_totals])]) 
 # 
-# column_totals = df.apply(calculate_colomn_totals)
-# column_totals.name = "Column_Totals"
 # 
-# df_with_totals = pd.concat([df, pd.DataFrame([column_totals])]) 
-# 
-# 
-# print(df_with_totals.tail())
+print(df_with_totals.tail())
 # 
 # iii. Using lambda with apply, write a function to determine the totals for the values in each
 # row and save them in a new column called “Row_Totals”.
@@ -30,9 +30,9 @@ import pandas as pd
 # # 
 # 
 # 
-# df["Row_Totals"] = df.apply(lambda row: row.sum(), axis=1)
+df["Row_Totals"] = df.apply(lambda row: row.sum(), axis=1)
 # 
-# print(df)
+print(df)
 # 
 # 
 # Consider the Airbnb_Open_Data.csv data-set.
@@ -43,9 +43,9 @@ print(df)
 
 # # i. Scrutinize the country column for NaN values
 # # (2 marks)
-# countryna = df['country'].isna()
+countryna = df['country'].isna()
 
-# print(countryna)
+print(countryna)
 
 # # ii. If the country column has NaN values, delete from the data-set all records with these values.
 # # (3 marks)
