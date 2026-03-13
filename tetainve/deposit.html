@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Deposit</title>
+<link rel="stylesheet" href="style.css">
+<script src="script.js"></script>
+</head>
+
+<body>
+
+<h2>Deposit Funds</h2>
+
+<div class="deposit-method">
+
+<h3>BTC</h3>
+
+<img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=btcaddress123">
+
+<p id="btc">btcaddress123</p>
+
+<button onclick="copy('btc')">Copy Address</button>
+
+<a href="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=btcaddress123" download>
+Download QR
+</a>
+
+</div>
+
+<div class="deposit-method">
+
+<h3>USDT (TRC20)</h3>
+
+<img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=usdtaddress123">
+
+<p id="usdt">usdtaddress123</p>
+
+<button onclick="copy('usdt')">Copy Address</button>
+
+</div>
+
+<div class="deposit-method">
+
+<h3>Ethereum</h3>
+
+<img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=ethaddress123">
+
+<p id="eth">ethaddress123</p>
+
+<button onclick="copy('eth')">Copy Address</button>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Dashboard</title>
+<link rel="stylesheet" href="style.css">
+<script src="script.js"></script>
+</head>
+
+<body onload="randomNotification()">
+
+<div class="topbar">
+
+<h2>Dashboard</h2>
+
+<div class="menu">
+<span onclick="toggleMenu()">⋮</span>
+
+<div id="dropdown">
+<a href="#">Settings</a>
+<a href="#">Profile</a>
+<a href="index.html">Logout</a>
+</div>
+
+</div>
+
+</div>
+
+<div class="balance">
+
+<h3>Total Balance</h3>
+<h1 id="balance">$0.00</h1>
+
+</div>
+
+<div class="profit">
+
+<h3>Portfolio Change</h3>
+<p id="profit">+0%</p>
+
+</div>
+
+<div class="buttons">
+
+<a href="deposit.html" class="btn">Deposit Funds</a>
+<button class="btn">Invest</button>
+
+</div>
+
+<h3>Recent Transactions</h3>
+
+<table>
+
+<tr>
+<th>Date</th>
+<th>Type</th>
+<th>Amount</th>
+</tr>
+
+<tr>
+<td>Today</td>
+<td>Deposit</td>
+<td>$250</td>
+</tr>
+
+<tr>
+<td>Yesterday</td>
+<td>Investment</td>
+<td>$120</td>
+</tr>
+
+</table>
+
+<div id="popup"></div>
+
+</body>
+</html>

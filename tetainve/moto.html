@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>NovaChain Capital</title>
+
+<style>
+
+body{
+font-family:Arial;
+margin:0;
+background:#0f172a;
+color:white;
+text-align:center;
+}
+
+section{
+display:none;
+padding:40px;
+}
+
+.active{
+display:block;
+}
+
+button{
+padding:10px 20px;
+margin:10px;
+border:none;
+border-radius:6px;
+background:#22c55e;
+color:white;
+cursor:pointer;
+}
+
+.card{
+background:#1e293b;
+padding:20px;
+margin:15px;
+border-radius:10px;
+}
+
+input{
+padding:10px;
+margin:10px;
+width:250px;
+}
+
+.topbar{
+display:flex;
+justify-content:space-between;
+padding:15px;
+background:#020617;
+}
+
+.menu{
+cursor:pointer;
+}
+
+#dropdown{
+display:none;
+position:absolute;
+right:10px;
+background:#1e293b;
+padding:10px;
+border-radius:6px;
+}
+
+#popup{
+position:fixed;
+bottom:20px;
+left:20px;
+background:#22c55e;
+padding:10px;
+border-radius:6px;
+display:none;
+}
+
+table{
+margin:auto;
+border-collapse:collapse;
+}
+
+td,th{
+padding:10px;
+border-bottom:1px solid gray;
+}
+
+.deposit{
+margin:20px;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- LANDING PAGE -->
+
+<section id="landing" class="active">
+
+<h1>NovaChain Capital</h1>
+
+<p>Advanced Digital Asset Investment Platform</p>
+
+<div class="card">
+<h3>Secure Crypto Storage</h3>
+<p>Manage BTC, ETH and USDT portfolios.</p>
+</div>
+
+<div class="card">
+<h3>Smart Investment Tools</h3>
+<p>Track and analyze your crypto performance.</p>
+</div>
+
+<div class="card">
+<h3>Real Time Monitoring</h3>
+<p>View balances and transaction history.</p>
+</div>
+
+<button onclick="showPage('auth')">Sign In / Sign Up</button>
+
+</section>
+
+
+<!-- AUTH PAGE -->
+
+<section id="auth">
+
+<h2>Account Access</h2>
+
+<input placeholder="Email"><br>
+<input type="password" placeholder="Password"><br>
+
+<button onclick="login()">Login</button>
+
+<h3>Create Account</h3>
+
+<input placeholder="Email"><br>
+<input type="password" placeholder="Password"><br>
+
+<button onclick="login()">Register</button>
+
+</section>
+
+
+
+<!-- DASHBOARD -->
+
+<section id="dashboard">
+
+<div class="topbar">
+
+<h2>Dashboard</h2>
+
+<div class="menu" onclick="toggleMenu()">⋮</div>
+
+<div id="dropdown">
+
+<p onclick="showPage('profile')">Profile</p>
+<p onclick="showPage('settings')">Settings</p>
+<p onclick="showPage('landing')">Logout</p>
+
+</div>
+
+</div>
+
+<h3>Total Balance</h3>
+<h1 id="balance">$1200</h1>
+
+<h3>Portfolio Change</h3>
+<p id="profit">+4.5%</p>
+
+<button onclick="showPage('deposit')">Deposit Funds</button>
+
+<h3>Recent Transactions</h3>
+
+<table>
+
+<tr>
+<th>Date</th>
+<th>Type</th>
+<th>Amount</th>
+</tr>
+
+<tr>
+<td>Today</td>
+<td>Deposit</td>
+<td>$250</td>
+</tr>
+
+<tr>
+<td>Yesterday</td>
+<td>Investment</td>
+<td>$150</td>
+</tr>
+
+</table>
+
+</section>
+
+
+
+<!-- DEPOSIT PAGE -->
+
+<section id="deposit">
+
+<h2>Deposit Funds</h2>
+
+<div class="deposit">
+
+<h3>BTC</h3>
+
+<img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=btcaddress123">
+
+<p id="btc">btcaddress123</p>
+
+<button onclick="copyAddress('btc')">Copy Address</button>
+
+<a href="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=btcaddress123" download>
+<button>Download QR</button>
+</a>
+
+</div>
+
+
+<div class="deposit">
+
+<h3>USDT (TRC20)</h3>
+
+<img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=usdtaddress123">
+
+<p id="usdt">usdtaddress123</p>
+
+<button onclick="copyAddress('usdt')">Copy Address</button>
+
+</div>
+
+
+<div class="deposit">
+
+<h3>Ethereum</h3>
+
+<img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=ethaddress123">
+
+<p id="eth">ethaddress123</p>
+
+<button onclick="copyAddress('eth')">Copy Address</button>
+
+</div>
+
+<button onclick="showPage('dashboard')">Back</button>
+
+</section>
+
+
+
+<!-- PROFILE -->
+
+<section id="profile">
+
+<h2>User Profile</h2>
+
+<p>Name: Demo User</p>
+<p>Email: demo@email.com</p>
+
+<button onclick="showPage('dashboard')">Back</button>
+
+</section>
+
+
+
+<!-- SETTINGS -->
+
+<section id="settings">
+
+<h2>Settings</h2>
+
+<p>Notification Settings</p>
+<p>Security Settings</p>
+
+<button onclick="showPage('dashboard')">Back</button>
+
+</section>
+
+
+
+<div id="popup"></div>
+
+
+
+<script>
+
+function showPage(page){
+
+let sections = document.querySelectorAll("section")
+
+sections.forEach(sec => sec.classList.remove("active"))
+
+document.getElementById(page).classList.add("active")
+
+}
+
+
+
+function login(){
+
+showPage("dashboard")
+
+startNotifications()
+
+}
+
+
+
+function toggleMenu(){
+
+let menu = document.getElementById("dropdown")
+
+menu.style.display = menu.style.display === "block" ? "none":"block"
+
+}
+
+
+
+function copyAddress(id){
+
+let text = document.getElementById(id).innerText
+
+navigator.clipboard.writeText(text)
+
+alert("Address copied!")
+
+}
+
+
+
+function startNotifications(){
+
+let names=["Alex","Sophia","Daniel","Maria","John","David"]
+
+let amounts=["$120","$300","$50","$800","$250"]
+
+setInterval(()=>{
+
+let name=names[Math.floor(Math.random()*names.length)]
+
+let amount=amounts[Math.floor(Math.random()*amounts.length)]
+
+let popup=document.getElementById("popup")
+
+popup.innerText=name+" made a transaction of "+amount
+
+popup.style.display="block"
+
+setTimeout(()=>{
+
+popup.style.display="none"
+
+},3000)
+
+},8000)
+
+}
+
+</script>
+
+</body>
+</html>
