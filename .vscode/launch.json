@@ -6,6 +6,20 @@
     "configurations": [
         {
             "type": "java",
+            "name": "NotepadApp",
+            "request": "launch",
+            "mainClass": "NotepadApp",
+            "projectName": "karatina-learning-uni~_9bec4436"
+        },
+        {
+            "type": "java",
+            "name": "RestaurantPOS",
+            "request": "launch",
+            "mainClass": "RestaurantPOS",
+            "projectName": "karatina-learning-uni~_9bec4436"
+        },
+        {
+            "type": "java",
             "name": "HelloWorld",
             "request": "launch",
             "mainClass": "java.HelloWorld",

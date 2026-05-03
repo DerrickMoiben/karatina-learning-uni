@@ -12,27 +12,30 @@ import java.awt.image.BufferedImage;
 
 public class RestaurantPOS extends JFrame {
 
-    // ─── Color Palette ─────────────────────────────────────────────────────
-    private static final Color BG_DARK       = new Color(18, 18, 30);
-    private static final Color BG_PANEL      = new Color(28, 28, 45);
-    private static final Color BG_CARD       = new Color(38, 38, 58);
-    private static final Color ACCENT_BLUE   = new Color(66, 135, 245);
-    private static final Color ACCENT_GREEN  = new Color(52, 199, 89);
-    private static final Color ACCENT_RED    = new Color(255, 69, 58);
-    private static final Color ACCENT_ORANGE = new Color(255, 149, 0);
-    private static final Color ACCENT_PURPLE = new Color(175, 82, 222);
-    private static final Color TEXT_PRIMARY  = new Color(245, 245, 250);
-    private static final Color TEXT_SECONDARY= new Color(160, 160, 180);
-    private static final Color DIVIDER       = new Color(55, 55, 80);
+    // ─── Modern Light Color Palette ─────────────────────────────────────────────
+    private static final Color BG_WHITE      = new Color(255, 255, 255);
+    private static final Color BG_SOFT_GRAY  = new Color(248, 249, 250);
+    private static final Color BG_CARD       = new Color(255, 255, 255);
+    private static final Color PRIMARY_GREEN = new Color(46, 204, 113);
+    private static final Color SECONDARY_BLUE= new Color(52, 152, 219);
+    private static final Color ACCENT_ORANGE = new Color(230, 126, 34);
+    private static final Color ACCENT_RED    = new Color(231, 76, 60);
+    private static final Color ACCENT_PURPLE = new Color(155, 89, 182);
+    private static final Color TEXT_DARK     = new Color(44, 62, 80);
+    private static final Color TEXT_GRAY     = new Color(127, 140, 141);
+    private static final Color TEXT_LIGHT    = new Color(149, 165, 166);
+    private static final Color DIVIDER       = new Color(236, 240, 241);
+    private static final Color SHADOW        = new Color(0, 0, 0, 10);
+    private static final Color HOVER_BLUE    = new Color(41, 128, 185);
 
     // ─── Category Colors ─────────────────────────────────────────────────────
     private static final Color[] CAT_COLORS = {
-        new Color(220, 50, 50),   // Burgers
-        new Color(220, 120, 20),  // Sides
-        new Color(40, 120, 220),  // Drinks
-        new Color(200, 60, 80),   // Salads
-        new Color(200, 140, 20),  // Desserts
-        new Color(30, 160, 80),   // Discounts
+        new Color(231, 76, 60),   // Burgers - Red
+        new Color(230, 126, 34),  // Sides - Orange
+        new Color(52, 152, 219),  // Drinks - Blue
+        new Color(46, 204, 113),  // Salads - Green
+        new Color(155, 89, 182),  // Desserts - Purple
+        new Color(241, 196, 15),  // Discounts - Yellow
     };
 
     // ─── Data ─────────────────────────────────────────────────────────────────
@@ -52,92 +55,93 @@ public class RestaurantPOS extends JFrame {
     private JLabel subtotalLabel, taxLabel, totalLabel;
     private JLabel statusBar;
     private JTable orderTable;
+    private JPanel cardPanel;
+    private JPanel orderPanel;
+    private JButton[] categoryButtons;
 
     // ══════════════════════════════════════════════════════════════════════════
     public RestaurantPOS() {
         buildMenuData();
-        setTitle("Omega Gardens Hotel – Restaurant POS");
+        setTitle("Omega Gardens Hotel – SmartPOS");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setSize(1280, 780);
-        setMinimumSize(new Dimension(1100, 680));
+        setSize(1400, 850);
+        setMinimumSize(new Dimension(1200, 700));
         setLocationRelativeTo(null);
-        setBackground(BG_DARK);
+        setBackground(BG_WHITE);
+
+        // Set modern look and feel
+        try {
+            UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+            UIManager.put("Button.arc", 10);
+            UIManager.put("Button.margin", new Insets(8, 16, 8, 16));
+        } catch (Exception e) {}
 
         JPanel root = new JPanel(new BorderLayout(0, 0));
-        root.setBackground(BG_DARK);
+        root.setBackground(BG_WHITE);
         root.add(buildTopBar(),    BorderLayout.NORTH);
         root.add(buildCenter(),    BorderLayout.CENTER);
         root.add(buildStatusBar(), BorderLayout.SOUTH);
         setContentPane(root);
 
-        // Pre-load images in background
         preloadImages();
-
         setVisible(true);
     }
 
-    // ─── Build menu data with local image filenames ───────────────────────────
+    // ─── Build menu data with KSH prices ─────────────────────────────────────
     private void buildMenuData() {
-        // Burgers
         menuData.put("Burgers", Arrays.asList(
-            new MenuItem("Cheeseburger",           11.00, "🍔", "cheeseburger.jpeg"),
-            new MenuItem("The Classic",            10.50, "🍔", "classic_burger.jpeg"),
-            new MenuItem("Veggie Burger",           9.50, "🥦", "veggie_burger.jpg"),
-            new MenuItem("Mushroom Burger",        10.00, "🍄", "mushroom_burger.jpeg"),
-            new MenuItem("Paradiso Burger",        12.50, "🌶", "spicy_burger.jpg"),
-            new MenuItem("Double Bacon",           13.00, "🥓", "bacon_burger.jpg"),
-            new MenuItem("BBQ Burger",             12.00, "🔥", "bbq_burger.jpg"),
-            new MenuItem("Crispy Chicken",         11.50, "🐔", "crispy_chicken_burger.jpg")
+            new MenuItem("Cheeseburger",           1430.00, "🍔", "cheeseburger.jpeg", "Classic cheeseburger with melted cheese"),
+            new MenuItem("The Classic",            1365.00, "🍔", "classic_burger.jpeg", "Traditional beef patty with lettuce"),
+            new MenuItem("Veggie Burger",          1235.00, "🥦", "veggie_burger.jpg", "Healthy plant-based patty"),
+            new MenuItem("Mushroom Burger",        1300.00, "🍄", "mushroom_burger.jpeg", "Savory mushroom and Swiss cheese"),
+            new MenuItem("Paradiso Burger",        1625.00, "🌶", "spicy_burger.jpg", "Spicy jalapeño and pepper jack"),
+            new MenuItem("Double Bacon",           1690.00, "🥓", "bacon_burger.jpg", "Two patties with crispy bacon"),
+            new MenuItem("BBQ Burger",             1560.00, "🔥", "bbq_burger.jpg", "Smoky BBQ sauce and onion rings"),
+            new MenuItem("Crispy Chicken",         1495.00, "🐔", "crispy_chicken_burger.jpg", "Fried chicken breast with coleslaw")
         ));
         
-        // Sides
         menuData.put("Sides", Arrays.asList(
-            new MenuItem("French Fries",            4.00, "🍟", "french_fries.jpg"),
-            new MenuItem("Onion Rings",             4.50, "🧅", "onion_rings.jpg"),
-            new MenuItem("Coleslaw",                3.00, "🥗", "coleslaw.jpg"),
-            new MenuItem("Garlic Bread",            3.50, "🥖", "garlic_bread.jpg"),
-            new MenuItem("Corn on the Cob",         4.00, "🌽", "corn_on_cob.jpg"),
-            new MenuItem("Sweet Potato Fries",      5.00, "🍠", "sweet_potato_fries.jpg")
+            new MenuItem("French Fries",            520.00, "🍟", "french_fries.jpg", "Crispy golden fries"),
+            new MenuItem("Onion Rings",             585.00, "🧅", "onion_rings.jpg", "Beer-battered onion rings"),
+            new MenuItem("Coleslaw",                390.00, "🥗", "coleslaw.jpg", "Creamy coleslaw salad"),
+            new MenuItem("Garlic Bread",            455.00, "🥖", "garlic_bread.jpg", "Toasted bread with garlic butter"),
+            new MenuItem("Corn on the Cob",         520.00, "🌽", "corn_on_cob.jpg", "Buttered corn with spices"),
+            new MenuItem("Sweet Potato Fries",      650.00, "🍠", "sweet_potato_fries.jpg", "Healthy sweet potato alternative")
         ));
         
-        // Drinks
         menuData.put("Drinks", Arrays.asList(
-            new MenuItem("Soda",                    2.50, "🥤", "soda.jpg"),
-            new MenuItem("Lemonade",                3.00, "🍋", "lemonade.jpg"),
-            new MenuItem("Iced Tea",                2.50, "🧋", "iced_tea.jpg"),
-            new MenuItem("Orange Juice",            4.00, "🍊", "orange_juice.jpg"),
-            new MenuItem("Coffee",                  3.50, "☕", "coffee.jpg"),
-            new MenuItem("Milkshake",               5.00, "🥛", "milkshake.jpg")
+            new MenuItem("Soda",                    325.00, "🥤", "soda.jpg", "Assorted sodas"),
+            new MenuItem("Lemonade",                390.00, "🍋", "lemonade.jpg", "Fresh squeezed lemonade"),
+            new MenuItem("Iced Tea",                325.00, "🧋", "iced_tea.jpg", "Brewed iced tea"),
+            new MenuItem("Orange Juice",            520.00, "🍊", "orange_juice.jpg", "Fresh orange juice"),
+            new MenuItem("Coffee",                  455.00, "☕", "coffee.jpg", "Premium Kenyan coffee"),
+            new MenuItem("Milkshake",               650.00, "🥛", "milkshake.jpg", "Thick creamy milkshake")
         ));
         
-        // Salads
         menuData.put("Salads", Arrays.asList(
-            new MenuItem("Caesar Salad",            7.50, "🥗", "caesar_salad.jpg"),
-            new MenuItem("Greek Salad",             8.00, "🫒", "greek_salad.jpg"),
-            new MenuItem("Garden Salad",            6.50, "🌱", "garden_salad.jpg"),
-            new MenuItem("Nicoise Salad",           9.00, "🐟", "nicoise_salad.jpg"),
-            new MenuItem("Caprese",                 8.50, "🍅", "caprese_salad.jpg")
+            new MenuItem("Caesar Salad",            975.00, "🥗", "caesar_salad.jpg", "Romaine lettuce with Caesar dressing"),
+            new MenuItem("Greek Salad",             1040.00, "🫒", "greek_salad.jpg", "Feta cheese and olives"),
+            new MenuItem("Garden Salad",            845.00, "🌱", "garden_salad.jpg", "Fresh mixed vegetables"),
+            new MenuItem("Nicoise Salad",           1170.00, "🐟", "nicoise_salad.jpg", "Tuna and boiled eggs"),
+            new MenuItem("Caprese",                 1105.00, "🍅", "caprese_salad.jpg", "Mozzarella and tomatoes")
         ));
         
-        // Desserts
         menuData.put("Desserts", Arrays.asList(
-            new MenuItem("Chocolate Cake",          6.50, "🍫", "chocolate_cake.jpg"),
-            new MenuItem("Ice Cream",               4.50, "🍦", "ice_cream.jpg"),
-            new MenuItem("Cheesecake",              7.00, "🍰", "cheesecake.jpg"),
-            new MenuItem("Brownie",                 5.00, "🍫", "brownie.jpg"),
-            new MenuItem("Fruit Salad",             5.50, "🍓", "fruit_salad.jpg")
+            new MenuItem("Chocolate Cake",          845.00, "🍫", "chocolate_cake.jpg", "Rich chocolate layer cake"),
+            new MenuItem("Ice Cream",               585.00, "🍦", "ice_cream.jpg", "Vanilla ice cream"),
+            new MenuItem("Cheesecake",              910.00, "🍰", "cheesecake.jpg", "New York style cheesecake"),
+            new MenuItem("Brownie",                 650.00, "🍫", "brownie.jpg", "Walnut brownie with fudge"),
+            new MenuItem("Fruit Salad",             715.00, "🍓", "fruit_salad.jpg", "Seasonal fresh fruits")
         ));
         
-        // Discounts (no images needed)
         menuData.put("Discounts", Arrays.asList(
-            new MenuItem("Staff Discount 10%",     -0.10, "🏷", "discount.jpg"),
-            new MenuItem("Happy Hour 20%",         -0.20, "⏰", "happy_hour.jpg"),
-            new MenuItem("Loyalty -$2",            -2.00, "⭐", "loyalty_reward.jpg"),
-            new MenuItem("Manager Comp",           -5.00, "🎁", "gift.jpg")
+            new MenuItem("Staff Discount 10%",     -0.10, "🏷", "discount.jpg", "10% staff discount"),
+            new MenuItem("Happy Hour 20%",         -0.20, "⏰", "happy_hour.jpg", "Happy hour special"),
+            new MenuItem("Loyalty -200 KSH",       -200.00, "⭐", "loyalty_reward.jpg", "Loyalty program discount"),
+            new MenuItem("Manager Comp",           -650.00, "🎁", "gift.jpg", "Manager complimentary")
         ));
     }
 
-    // ─── Load image from local "images" folder ────────────────────────────────
     private ImageIcon loadLocalImage(String filename, int width, int height) {
         if (filename == null) return null;
         
@@ -147,30 +151,24 @@ public class RestaurantPOS extends JFrame {
         }
 
         try {
-            // Look for images in the "images" folder (same directory as .java file)
             String path = "images/" + filename;
             File imageFile = new File(path);
             
             if (imageFile.exists()) {
                 BufferedImage original = ImageIO.read(imageFile);
                 if (original != null) {
-                    // Create square crop from center
                     int size = Math.min(original.getWidth(), original.getHeight());
                     int x = (original.getWidth() - size) / 2;
                     int y = (original.getHeight() - size) / 2;
                     BufferedImage cropped = original.getSubimage(x, y, size, size);
-                    
-                    // Scale to desired size
                     Image scaled = cropped.getScaledInstance(width, height, Image.SCALE_SMOOTH);
                     ImageIcon icon = new ImageIcon(scaled);
                     imageCache.put(cacheKey, icon);
                     return icon;
                 }
-            } else {
-                System.err.println("Image not found: " + path);
             }
         } catch (Exception e) {
-            System.err.println("Could not load image: " + filename + " - " + e.getMessage());
+            System.err.println("Could not load image: " + filename);
         }
         
         imageCache.put(cacheKey, null);
@@ -184,7 +182,7 @@ public class RestaurantPOS extends JFrame {
                 for (List<MenuItem> items : menuData.values()) {
                     for (MenuItem item : items) {
                         if (item.imageFile != null) {
-                            loadLocalImage(item.imageFile, 90, 90);
+                            loadLocalImage(item.imageFile, 120, 120);
                         }
                     }
                 }
@@ -201,153 +199,206 @@ public class RestaurantPOS extends JFrame {
         worker.execute();
     }
 
-    // ─── Top bar ──────────────────────────────────────────────────────────────
+    // ─── Modern Top Bar ───────────────────────────────────────────────────────
     private JPanel buildTopBar() {
         JPanel bar = new JPanel(new BorderLayout());
-        bar.setBackground(BG_PANEL);
-        bar.setBorder(new MatteBorder(0, 0, 1, 0, DIVIDER));
-        bar.setPreferredSize(new Dimension(0, 56));
+        bar.setBackground(BG_WHITE);
+        bar.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, DIVIDER));
+        bar.setPreferredSize(new Dimension(0, 70));
 
-        JLabel logo = new JLabel("  🌿 Omega Gardens Hotel POS");
-        logo.setFont(new Font("SansSerif", Font.BOLD, 16));
-        logo.setForeground(TEXT_PRIMARY);
+        // Left side - Logo and Brand
+        JPanel leftPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 15, 15));
+        leftPanel.setOpaque(false);
+        
+        JLabel logoIcon = new JLabel("🍽️");
+        logoIcon.setFont(new Font("Segoe UI", Font.PLAIN, 32));
+        
+        JLabel logo = new JLabel("Omega Gardens");
+        logo.setFont(new Font("Segoe UI", Font.BOLD, 20));
+        logo.setForeground(TEXT_DARK);
+        
+        JLabel tagline = new JLabel("SmartPOS");
+        tagline.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        tagline.setForeground(PRIMARY_GREEN);
+        
+        JPanel brandPanel = new JPanel(new BorderLayout());
+        brandPanel.setOpaque(false);
+        brandPanel.add(logo, BorderLayout.NORTH);
+        brandPanel.add(tagline, BorderLayout.SOUTH);
+        
+        leftPanel.add(logoIcon);
+        leftPanel.add(brandPanel);
 
-        JPanel center = new JPanel(new FlowLayout(FlowLayout.CENTER, 12, 8));
-        center.setOpaque(false);
-        JLabel tLbl = new JLabel("Table:");
-        tLbl.setForeground(TEXT_SECONDARY);
-        tLbl.setFont(new Font("SansSerif", Font.PLAIN, 13));
-        tableLabel = new JLabel("T" + tableNumber);
-        tableLabel.setForeground(ACCENT_BLUE);
-        tableLabel.setFont(new Font("SansSerif", Font.BOLD, 15));
+        // Center - Table selector with modern design
+        JPanel centerPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
+        centerPanel.setOpaque(false);
+        
+        JLabel tLbl = new JLabel("Table");
+        tLbl.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        tLbl.setForeground(TEXT_GRAY);
+        
+        JButton prev = createIconButton("◀");
+        JButton next = createIconButton("▶");
+        
+        tableLabel = new JLabel(String.valueOf(tableNumber));
+        tableLabel.setFont(new Font("Segoe UI", Font.BOLD, 24));
+        tableLabel.setForeground(PRIMARY_GREEN);
+        
+        JPanel tableCard = new JPanel(new BorderLayout(5, 0));
+        tableCard.setBackground(BG_SOFT_GRAY);
+        tableCard.setBorder(BorderFactory.createCompoundBorder(
+            BorderFactory.createLineBorder(DIVIDER, 1, true),
+            BorderFactory.createEmptyBorder(8, 15, 8, 15)
+        ));
+        tableCard.add(prev, BorderLayout.WEST);
+        tableCard.add(tableLabel, BorderLayout.CENTER);
+        tableCard.add(next, BorderLayout.EAST);
+        
+        orderNumLabel = new JLabel("Order #" + orderCounter);
+        orderNumLabel.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+        orderNumLabel.setForeground(TEXT_GRAY);
+        
+        centerPanel.add(tLbl);
+        centerPanel.add(tableCard);
+        centerPanel.add(Box.createHorizontalStrut(20));
+        centerPanel.add(orderNumLabel);
 
-        JButton prev = iconBtn("◀"), next = iconBtn("▶");
+        // Right side - Actions
+        JPanel rightPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 15, 15));
+        rightPanel.setOpaque(false);
+        
+        JLabel clock = new JLabel();
+        clock.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+        clock.setForeground(TEXT_GRAY);
+        javax.swing.Timer t = new javax.swing.Timer(1000,
+                e -> clock.setText(new SimpleDateFormat("HH:mm • EEE, MMM d").format(new Date())));
+        t.start();
+        
+        JButton newOrder = createGradientButton("+ New Order", PRIMARY_GREEN, new Color(39, 174, 96));
+        newOrder.addActionListener(e -> newOrder());
+        
+        rightPanel.add(clock);
+        rightPanel.add(newOrder);
+
         prev.addActionListener(e -> changeTable(-1));
         next.addActionListener(e -> changeTable(+1));
 
-        orderNumLabel = new JLabel("Order #" + orderCounter);
-        orderNumLabel.setForeground(TEXT_SECONDARY);
-        orderNumLabel.setFont(new Font("SansSerif", Font.PLAIN, 13));
-
-        center.add(tLbl); center.add(prev); center.add(tableLabel); center.add(next);
-        center.add(new JSeparator(JSeparator.VERTICAL));
-        center.add(orderNumLabel);
-
-        JPanel right = new JPanel(new FlowLayout(FlowLayout.RIGHT, 12, 10));
-        right.setOpaque(false);
-        JLabel clock = new JLabel();
-        clock.setForeground(TEXT_SECONDARY);
-        clock.setFont(new Font("SansSerif", Font.PLAIN, 13));
-        javax.swing.Timer t = new javax.swing.Timer(1000,
-                e -> clock.setText(new SimpleDateFormat("HH:mm:ss  dd MMM yyyy").format(new Date())));
-        t.start();
-        t.getActionListeners()[0].actionPerformed(null);
-
-        JButton newOrder = roundBtn("＋ New Order", ACCENT_GREEN, Color.WHITE);
-        newOrder.addActionListener(e -> newOrder());
-        right.add(clock); right.add(newOrder);
-
-        bar.add(logo, BorderLayout.WEST);
-        bar.add(center, BorderLayout.CENTER);
-        bar.add(right, BorderLayout.EAST);
+        bar.add(leftPanel, BorderLayout.WEST);
+        bar.add(centerPanel, BorderLayout.CENTER);
+        bar.add(rightPanel, BorderLayout.EAST);
+        
         return bar;
     }
 
-    // ─── Centre split pane ────────────────────────────────────────────────────
+    // ─── Center Panel with Card Design ────────────────────────────────────────
     private JSplitPane buildCenter() {
         JSplitPane split = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
                 buildMenuPanel(), buildCheckPanel());
-        split.setDividerLocation(740);
-        split.setDividerSize(4);
+        split.setDividerLocation(850);
+        split.setDividerSize(2);
         split.setBackground(DIVIDER);
         split.setBorder(null);
         return split;
     }
 
-    // ─── Menu panel ───────────────────────────────────────────────────────────
+    // ─── Modern Menu Panel ────────────────────────────────────────────────────
     private JPanel buildMenuPanel() {
         JPanel panel = new JPanel(new BorderLayout(0, 0));
-        panel.setBackground(BG_DARK);
+        panel.setBackground(BG_WHITE);
 
-        JPanel searchRow = new JPanel(new BorderLayout(8, 0));
-        searchRow.setBackground(BG_DARK);
-        searchRow.setBorder(new EmptyBorder(10, 12, 6, 12));
+        // Search Bar
+        JPanel searchPanel = new JPanel(new BorderLayout(10, 0));
+        searchPanel.setBackground(BG_WHITE);
+        searchPanel.setBorder(new EmptyBorder(20, 20, 15, 20));
+        
         JTextField search = new JTextField();
-        styleTextField(search, "🔍  Search menu...");
+        search.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        search.setBackground(BG_SOFT_GRAY);
+        search.setForeground(TEXT_DARK);
+        search.setBorder(BorderFactory.createCompoundBorder(
+            BorderFactory.createLineBorder(DIVIDER, 1, true),
+            BorderFactory.createEmptyBorder(12, 15, 12, 15)
+        ));
+        search.putClientProperty("JTextField.placeholderText", "🔍 Search menu items...");
+        
         search.getDocument().addDocumentListener(new javax.swing.event.DocumentListener() {
             public void insertUpdate(javax.swing.event.DocumentEvent e) { filterMenu(search.getText()); }
             public void removeUpdate(javax.swing.event.DocumentEvent e) { filterMenu(search.getText()); }
             public void changedUpdate(javax.swing.event.DocumentEvent e) {}
         });
-        searchRow.add(search, BorderLayout.CENTER);
+        
+        searchPanel.add(search, BorderLayout.CENTER);
 
-        JPanel catPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 6, 8));
-        catPanel.setBackground(BG_DARK);
-        catPanel.setBorder(new EmptyBorder(0, 6, 0, 6));
+        // Category Pills
+        JPanel catPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 0));
+        catPanel.setBackground(BG_WHITE);
+        catPanel.setBorder(new EmptyBorder(0, 20, 20, 20));
+        
         String[] categories = menuData.keySet().toArray(new String[0]);
+        categoryButtons = new JButton[categories.length];
+        
         for (int i = 0; i < categories.length; i++) {
             final String cat = categories[i];
-            final Color col  = CAT_COLORS[i % CAT_COLORS.length];
-            JButton btn = buildCatButton(cat, col);
-            btn.addActionListener(e -> selectCategory(cat, col));
+            final Color color = CAT_COLORS[i % CAT_COLORS.length];
+            JButton btn = createPillButton(cat, color, cat.equals(currentCategory));
+            final int index = i;
+            btn.addActionListener(e -> {
+                currentCategory = cat;
+                loadCategory(cat);
+                for (int j = 0; j < categoryButtons.length; j++) {
+                    updatePillButton(categoryButtons[j], categories[j], 
+                        CAT_COLORS[j % CAT_COLORS.length], j == index);
+                }
+            });
+            categoryButtons[i] = btn;
             catPanel.add(btn);
         }
 
-        menuItemsPanel = new JPanel(new GridLayout(0, 3, 8, 8));
-        menuItemsPanel.setBackground(BG_DARK);
-        menuItemsPanel.setBorder(new EmptyBorder(4, 12, 12, 12));
+        // Menu Items Grid
+        menuItemsPanel = new JPanel(new GridLayout(0, 3, 15, 15));
+        menuItemsPanel.setBackground(BG_WHITE);
+        menuItemsPanel.setBorder(new EmptyBorder(0, 20, 20, 20));
 
         JScrollPane scroll = new JScrollPane(menuItemsPanel);
         scroll.setBorder(null);
-        scroll.getViewport().setBackground(BG_DARK);
+        scroll.getViewport().setBackground(BG_WHITE);
         scroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        scroll.getVerticalScrollBar().setUnitIncrement(16);
 
         JPanel top = new JPanel(new BorderLayout());
-        top.setBackground(BG_DARK);
-        top.add(searchRow, BorderLayout.NORTH);
-        top.add(catPanel,  BorderLayout.CENTER);
-        panel.add(top,   BorderLayout.NORTH);
+        top.setBackground(BG_WHITE);
+        top.add(searchPanel, BorderLayout.NORTH);
+        top.add(catPanel, BorderLayout.CENTER);
+        panel.add(top, BorderLayout.NORTH);
         panel.add(scroll, BorderLayout.CENTER);
 
         loadCategory("Burgers");
         return panel;
     }
 
-    private JButton buildCatButton(String name, Color color) {
-        JButton btn = new JButton(name);
-        btn.setFont(new Font("SansSerif", Font.BOLD, 12));
-        btn.setForeground(name.equals(currentCategory) ? Color.WHITE : TEXT_PRIMARY);
-        btn.setBackground(name.equals(currentCategory) ? color : BG_CARD);
-        btn.setBorder(new EmptyBorder(7, 14, 7, 14));
+    private JButton createPillButton(String text, Color color, boolean isActive) {
+        JButton btn = new JButton(text);
+        btn.setFont(new Font("Segoe UI", Font.BOLD, 13));
+        if (isActive) {
+            btn.setBackground(color);
+            btn.setForeground(Color.WHITE);
+        } else {
+            btn.setBackground(BG_SOFT_GRAY);
+            btn.setForeground(TEXT_DARK);
+        }
+        btn.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
         btn.setFocusPainted(false);
         btn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        btn.putClientProperty("color", color);
-        btn.putClientProperty("name", name);
         return btn;
     }
 
-    private void selectCategory(String cat, Color color) {
-        currentCategory = cat;
-        loadCategory(cat);
-        refreshCategoryButtons();
-    }
-
-    private void refreshCategoryButtons() {
-        refreshCategoryButtonsIn(getContentPane());
-    }
-
-    private void refreshCategoryButtonsIn(Container container) {
-        for (Component c : container.getComponents()) {
-            if (c instanceof JButton b) {
-                String name = (String) b.getClientProperty("name");
-                Color  col  = (Color)  b.getClientProperty("color");
-                if (name != null && col != null) {
-                    b.setBackground(name.equals(currentCategory) ? col : BG_CARD);
-                    b.setForeground(name.equals(currentCategory) ? Color.WHITE : TEXT_PRIMARY);
-                    b.repaint();
-                }
-            }
-            if (c instanceof Container sub) refreshCategoryButtonsIn(sub);
+    private void updatePillButton(JButton btn, String text, Color color, boolean isActive) {
+        if (isActive) {
+            btn.setBackground(color);
+            btn.setForeground(Color.WHITE);
+        } else {
+            btn.setBackground(BG_SOFT_GRAY);
+            btn.setForeground(TEXT_DARK);
         }
     }
 
@@ -361,100 +412,127 @@ public class RestaurantPOS extends JFrame {
         List<MenuItem> filtered = new ArrayList<>();
         for (List<MenuItem> items : menuData.values())
             for (MenuItem m : items)
-                if (m.name.toLowerCase().contains(q))
+                if (m.name.toLowerCase().contains(q) || m.description.toLowerCase().contains(q))
                     filtered.add(m);
         renderItems(filtered);
     }
 
     private void renderItems(List<MenuItem> items) {
         menuItemsPanel.removeAll();
-        for (MenuItem item : items) menuItemsPanel.add(buildItemCard(item));
+        for (MenuItem item : items) menuItemsPanel.add(createModernCard(item));
         menuItemsPanel.revalidate();
         menuItemsPanel.repaint();
     }
 
-    // ─── Item card with local image ──────────────────────────────────────────
-    private JPanel buildItemCard(MenuItem item) {
-        JPanel card = new JPanel(new BorderLayout(4, 4));
-        card.setBackground(BG_CARD);
-        card.setBorder(new CompoundBorder(
-            new LineBorder(DIVIDER, 1, true),
-            new EmptyBorder(8, 8, 8, 8)
+    // ─── Modern Item Card with hover effects ─────────────────────────────────
+    private JPanel createModernCard(MenuItem item) {
+        JPanel card = new JPanel(new BorderLayout(10, 10));
+        card.setBackground(Color.WHITE);
+        card.setBorder(BorderFactory.createCompoundBorder(
+            BorderFactory.createLineBorder(DIVIDER, 1, true),
+            BorderFactory.createEmptyBorder(15, 15, 15, 15)
         ));
         card.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
-        // Load image from local folder
-        ImageIcon icon = loadLocalImage(item.imageFile, 90, 90);
+        // Image section
+        ImageIcon icon = loadLocalImage(item.imageFile, 100, 100);
         JLabel imageLabel;
         
         if (icon != null) {
             imageLabel = new JLabel(icon);
-            imageLabel.setHorizontalAlignment(SwingConstants.CENTER);
         } else {
-            // Fallback to emoji if image not found
             imageLabel = new JLabel(item.emoji, SwingConstants.CENTER);
-            imageLabel.setFont(new Font("SansSerif", Font.PLAIN, 48));
+            imageLabel.setFont(new Font("Segoe UI", Font.PLAIN, 60));
         }
+        imageLabel.setHorizontalAlignment(SwingConstants.CENTER);
         
-        imageLabel.setPreferredSize(new Dimension(90, 90));
-
-        JLabel name = new JLabel(item.name, SwingConstants.CENTER);
-        name.setFont(new Font("SansSerif", Font.BOLD, 11));
-        name.setForeground(TEXT_PRIMARY);
-
-        String priceStr = item.price < 0
-                ? String.format("-$%.2f", Math.abs(item.price))
-                : String.format("$%.2f", item.price);
-        JLabel price = new JLabel(priceStr, SwingConstants.CENTER);
-        price.setFont(new Font("SansSerif", Font.BOLD, 12));
-        price.setForeground(item.price < 0 ? ACCENT_GREEN : ACCENT_BLUE);
-
-        JPanel bottom = new JPanel(new BorderLayout());
-        bottom.setOpaque(false);
-        bottom.add(name,  BorderLayout.CENTER);
-        bottom.add(price, BorderLayout.SOUTH);
-
-        card.add(imageLabel, BorderLayout.CENTER);
-        card.add(bottom, BorderLayout.SOUTH);
-
+        // Content panel
+        JPanel contentPanel = new JPanel(new BorderLayout(5, 8));
+        contentPanel.setOpaque(false);
+        
+        JLabel nameLabel = new JLabel(item.name);
+        nameLabel.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        nameLabel.setForeground(TEXT_DARK);
+        
+        JLabel descLabel = new JLabel(item.description);
+        descLabel.setFont(new Font("Segoe UI", Font.PLAIN, 11));
+        descLabel.setForeground(TEXT_LIGHT);
+        
+        JLabel priceLabel = new JLabel(String.format("KSH %.0f", item.price));
+        priceLabel.setFont(new Font("Segoe UI", Font.BOLD, 16));
+        priceLabel.setForeground(item.price < 0 ? PRIMARY_GREEN : SECONDARY_BLUE);
+        
+        JButton addBtn = new JButton("+ Add");
+        addBtn.setFont(new Font("Segoe UI", Font.BOLD, 11));
+        addBtn.setBackground(PRIMARY_GREEN);
+        addBtn.setForeground(Color.WHITE);
+        addBtn.setBorder(BorderFactory.createEmptyBorder(6, 12, 6, 12));
+        addBtn.setFocusPainted(false);
+        addBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        addBtn.addActionListener(e -> addToOrder(item));
+        
+        JPanel bottomPanel = new JPanel(new BorderLayout(5, 0));
+        bottomPanel.setOpaque(false);
+        bottomPanel.add(priceLabel, BorderLayout.WEST);
+        bottomPanel.add(addBtn, BorderLayout.EAST);
+        
+        contentPanel.add(nameLabel, BorderLayout.NORTH);
+        contentPanel.add(descLabel, BorderLayout.CENTER);
+        contentPanel.add(bottomPanel, BorderLayout.SOUTH);
+        
+        card.add(imageLabel, BorderLayout.WEST);
+        card.add(contentPanel, BorderLayout.CENTER);
+        
+        // Hover effect
         card.addMouseListener(new MouseAdapter() {
             public void mouseEntered(MouseEvent e) {
-                card.setBackground(new Color(50, 50, 75));
-                card.setBorder(new CompoundBorder(
-                    new LineBorder(ACCENT_BLUE, 1, true),
-                    new EmptyBorder(8, 8, 8, 8)));
+                card.setBorder(BorderFactory.createCompoundBorder(
+                    BorderFactory.createLineBorder(SECONDARY_BLUE, 2, true),
+                    BorderFactory.createEmptyBorder(14, 14, 14, 14)
+                ));
+                card.setBackground(new Color(248, 249, 250));
             }
             public void mouseExited(MouseEvent e) {
-                card.setBackground(BG_CARD);
-                card.setBorder(new CompoundBorder(
-                    new LineBorder(DIVIDER, 1, true),
-                    new EmptyBorder(8, 8, 8, 8)));
+                card.setBorder(BorderFactory.createCompoundBorder(
+                    BorderFactory.createLineBorder(DIVIDER, 1, true),
+                    BorderFactory.createEmptyBorder(15, 15, 15, 15)
+                ));
+                card.setBackground(Color.WHITE);
             }
-            public void mouseClicked(MouseEvent e) { addToOrder(item); }
         });
-
+        
         return card;
     }
 
-    // ─── Check / Order panel ─────────────────────────────────────────────────
+    // ─── Modern Check Panel ───────────────────────────────────────────────────
     private JPanel buildCheckPanel() {
-        JPanel panel = new JPanel(new BorderLayout(0, 0));
-        panel.setBackground(BG_PANEL);
-        panel.setBorder(new MatteBorder(0, 1, 0, 0, DIVIDER));
-        panel.setPreferredSize(new Dimension(380, 0));
+        orderPanel = new JPanel(new BorderLayout(0, 0));
+        orderPanel.setBackground(BG_WHITE);
+        orderPanel.setBorder(BorderFactory.createMatteBorder(0, 1, 0, 0, DIVIDER));
+        orderPanel.setPreferredSize(new Dimension(400, 0));
 
-        JPanel tabs = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
-        tabs.setBackground(BG_PANEL);
-        tabs.setBorder(new MatteBorder(0, 0, 1, 0, DIVIDER));
-        for (String t : new String[]{"Check", "Actions", "Guest"}) {
-            JLabel tab = new JLabel(t);
-            tab.setFont(new Font("SansSerif", t.equals("Check") ? Font.BOLD : Font.PLAIN, 13));
-            tab.setForeground(t.equals("Check") ? ACCENT_BLUE : TEXT_SECONDARY);
-            tab.setBorder(new EmptyBorder(12, 18, 12, 18));
-            tabs.add(tab);
-        }
+        // Header
+        JPanel header = new JPanel(new BorderLayout());
+        header.setBackground(BG_WHITE);
+        header.setBorder(new EmptyBorder(20, 20, 15, 20));
+        
+        JLabel orderTitle = new JLabel("Current Order");
+        orderTitle.setFont(new Font("Segoe UI", Font.BOLD, 18));
+        orderTitle.setForeground(TEXT_DARK);
+        
+        JLabel itemCount = new JLabel("0 items");
+        itemCount.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+        itemCount.setForeground(TEXT_LIGHT);
+        
+        JPanel titlePanel = new JPanel(new BorderLayout());
+        titlePanel.setOpaque(false);
+        titlePanel.add(orderTitle, BorderLayout.NORTH);
+        titlePanel.add(itemCount, BorderLayout.SOUTH);
+        
+        header.add(titlePanel, BorderLayout.WEST);
 
-        String[] cols = {"Item", "Qty", "Price"};
+        // Order Table
+        String[] cols = {"Item", "Qty", "Total"};
         orderTableModel = new DefaultTableModel(cols, 0) {
             public boolean isCellEditable(int r, int c) { return false; }
         };
@@ -463,85 +541,129 @@ public class RestaurantPOS extends JFrame {
 
         JScrollPane scroll = new JScrollPane(orderTable);
         scroll.setBorder(null);
-        scroll.getViewport().setBackground(BG_PANEL);
+        scroll.getViewport().setBackground(BG_WHITE);
 
+        // Footer with totals and actions
         JPanel footer = new JPanel(new BorderLayout());
-        footer.setBackground(BG_PANEL);
-        footer.add(buildTotalsPanel(),  BorderLayout.NORTH);
-        footer.add(buildActionButtons(), BorderLayout.CENTER);
-        footer.add(buildBottomNav(),    BorderLayout.SOUTH);
-
-        panel.add(tabs,   BorderLayout.NORTH);
-        panel.add(scroll, BorderLayout.CENTER);
-        panel.add(footer, BorderLayout.SOUTH);
-        return panel;
+        footer.setBackground(BG_WHITE);
+        footer.setBorder(new EmptyBorder(15, 20, 20, 20));
+        
+        // Totals Panel
+        JPanel totalsPanel = new JPanel(new GridBagLayout());
+        totalsPanel.setBackground(BG_SOFT_GRAY);
+        totalsPanel.setBorder(BorderFactory.createCompoundBorder(
+            BorderFactory.createLineBorder(DIVIDER, 1, true),
+            new EmptyBorder(15, 15, 15, 15)
+        ));
+        
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.insets = new Insets(5, 0, 5, 0);
+        
+        gbc.gridx = 0; gbc.gridy = 0;
+        totalsPanel.add(createTotalRow("Subtotal", "KSH 0"), gbc);
+        gbc.gridy = 1;
+        totalsPanel.add(createTotalRow("Tax (9.5%)", "KSH 0"), gbc);
+        gbc.gridy = 2;
+        totalsPanel.add(createTotalRow("Total", "KSH 0", true), gbc);
+        
+        // Action Buttons
+        JPanel actionPanel = new JPanel(new GridLayout(1, 3, 10, 0));
+        actionPanel.setOpaque(false);
+        actionPanel.setBorder(new EmptyBorder(15, 0, 15, 0));
+        
+        JButton editBtn = createOutlineButton("Edit", SECONDARY_BLUE);
+        JButton removeBtn = createOutlineButton("Remove", ACCENT_RED);
+        JButton clearBtn = createOutlineButton("Clear", ACCENT_ORANGE);
+        
+        editBtn.addActionListener(e -> editSelectedItem());
+        removeBtn.addActionListener(e -> removeSelectedItem());
+        clearBtn.addActionListener(e -> clearOrder());
+        
+        actionPanel.add(editBtn);
+        actionPanel.add(removeBtn);
+        actionPanel.add(clearBtn);
+        
+        // Payment Buttons
+        JPanel paymentPanel = new JPanel(new GridLayout(1, 3, 10, 0));
+        JButton cashBtn = createGradientButton("💵 Cash", PRIMARY_GREEN, new Color(39, 174, 96));
+        JButton cardBtn = createGradientButton("💳 Card", SECONDARY_BLUE, new Color(41, 128, 185));
+        JButton mpesaBtn = createGradientButton("📱 M-Pesa", ACCENT_PURPLE, new Color(142, 68, 173));
+        
+        cashBtn.addActionListener(e -> processPayment("Cash"));
+        cardBtn.addActionListener(e -> processPayment("Card"));
+        mpesaBtn.addActionListener(e -> processPayment("M-Pesa"));
+        
+        paymentPanel.add(cashBtn);
+        paymentPanel.add(cardBtn);
+        paymentPanel.add(mpesaBtn);
+        
+        footer.add(totalsPanel, BorderLayout.NORTH);
+        footer.add(actionPanel, BorderLayout.CENTER);
+        footer.add(paymentPanel, BorderLayout.SOUTH);
+        
+        orderPanel.add(header, BorderLayout.NORTH);
+        orderPanel.add(scroll, BorderLayout.CENTER);
+        orderPanel.add(footer, BorderLayout.SOUTH);
+        
+        // Store references for updates
+        Component[] components = totalsPanel.getComponents();
+        subtotalLabel = (JLabel)((JPanel)components[0]).getComponent(1);
+        taxLabel = (JLabel)((JPanel)components[1]).getComponent(1);
+        totalLabel = (JLabel)((JPanel)components[2]).getComponent(1);
+        
+        return orderPanel;
     }
 
-    private JPanel buildTotalsPanel() {
-        JPanel p = new JPanel(new GridLayout(3, 2, 0, 4));
-        p.setBackground(BG_PANEL);
-        p.setBorder(new CompoundBorder(
-            new MatteBorder(1, 0, 1, 0, DIVIDER),
-            new EmptyBorder(10, 16, 10, 16)));
-        subtotalLabel = totalRow(p, "Subtotal");
-        taxLabel      = totalRow(p, "Tax (9.5%)");
-        totalLabel    = totalRow(p, "Total");
-        totalLabel.setFont(new Font("SansSerif", Font.BOLD, 16));
-        totalLabel.setForeground(ACCENT_BLUE);
-        return p;
+    private JPanel createTotalRow(String label, String value) {
+        return createTotalRow(label, value, false);
     }
-
-    private JLabel totalRow(JPanel p, String label) {
-        boolean isTotal = label.equals("Total");
-        JLabel lbl = new JLabel(label);
-        lbl.setForeground(isTotal ? TEXT_PRIMARY : TEXT_SECONDARY);
-        lbl.setFont(new Font("SansSerif", isTotal ? Font.BOLD : Font.PLAIN, 13));
-        JLabel val = new JLabel("$0.00", SwingConstants.RIGHT);
-        val.setForeground(isTotal ? ACCENT_BLUE : TEXT_SECONDARY);
-        val.setFont(new Font("SansSerif", isTotal ? Font.BOLD : Font.PLAIN, 13));
-        p.add(lbl); p.add(val);
-        return val;
-    }
-
-    private JPanel buildActionButtons() {
-        JPanel p = new JPanel(new GridLayout(2, 2, 6, 6));
-        p.setBackground(BG_PANEL);
-        p.setBorder(new EmptyBorder(8, 16, 8, 16));
-        JButton edit   = roundBtn("✏️ Edit",   ACCENT_BLUE,   Color.WHITE);
-        JButton remove = roundBtn("🗑️ Remove", ACCENT_RED,    Color.WHITE);
-        JButton voidBtn= roundBtn("🚫 Void",   ACCENT_ORANGE, Color.WHITE);
-        JButton note   = roundBtn("📝 Note",   ACCENT_PURPLE, Color.WHITE);
-        edit.addActionListener(e -> editSelectedItem());
-        remove.addActionListener(e -> removeSelectedItem());
-        p.add(edit); p.add(remove); p.add(voidBtn); p.add(note);
-        return p;
-    }
-
-    private JPanel buildBottomNav() {
-        JPanel nav = new JPanel(new FlowLayout(FlowLayout.CENTER, 8, 10));
-        nav.setBackground(BG_PANEL);
-        JButton hold  = roundBtn("Hold Order", ACCENT_ORANGE, Color.WHITE);
-        JButton print = roundBtn("Print Bill",  ACCENT_PURPLE, Color.WHITE);
-        JButton pay   = roundBtn("Pay",         ACCENT_GREEN,  Color.WHITE);
-        hold.addActionListener(e -> holdOrder());
-        print.addActionListener(e -> printBill());
-        pay.addActionListener(e -> processPayment());
-        nav.add(hold); nav.add(print); nav.add(pay);
-        return nav;
+    
+    private JPanel createTotalRow(String label, String value, boolean isBold) {
+        JPanel row = new JPanel(new BorderLayout());
+        row.setOpaque(false);
+        JLabel labelLbl = new JLabel(label);
+        JLabel valueLbl = new JLabel(value, SwingConstants.RIGHT);
+        
+        if (isBold) {
+            labelLbl.setFont(new Font("Segoe UI", Font.BOLD, 14));
+            valueLbl.setFont(new Font("Segoe UI", Font.BOLD, 14));
+            valueLbl.setForeground(PRIMARY_GREEN);
+        } else {
+            labelLbl.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+            valueLbl.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+            valueLbl.setForeground(TEXT_GRAY);
+        }
+        
+        row.add(labelLbl, BorderLayout.WEST);
+        row.add(valueLbl, BorderLayout.EAST);
+        return row;
     }
 
     private JPanel buildStatusBar() {
-        JPanel bar = new JPanel(new FlowLayout(FlowLayout.LEFT, 12, 4));
-        bar.setBackground(BG_PANEL);
-        bar.setBorder(new MatteBorder(1, 0, 0, 0, DIVIDER));
-        statusBar = new JLabel("✓ Ready | Table " + tableNumber + " | Items: 0");
-        statusBar.setForeground(TEXT_SECONDARY);
-        statusBar.setFont(new Font("SansSerif", Font.PLAIN, 11));
+        JPanel bar = new JPanel(new FlowLayout(FlowLayout.LEFT, 15, 8));
+        bar.setBackground(BG_SOFT_GRAY);
+        bar.setBorder(BorderFactory.createMatteBorder(1, 0, 0, 0, DIVIDER));
+        
+        statusBar = new JLabel("✓ System Ready");
+        statusBar.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+        statusBar.setForeground(PRIMARY_GREEN);
+        
+        JLabel separator = new JLabel("|");
+        separator.setForeground(TEXT_LIGHT);
+        
+        JLabel tableStatus = new JLabel("Table " + tableNumber + " • Order #" + orderCounter);
+        tableStatus.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+        tableStatus.setForeground(TEXT_GRAY);
+        
         bar.add(statusBar);
+        bar.add(separator);
+        bar.add(tableStatus);
+        
         return bar;
     }
 
-    // ─── Order logic ─────────────────────────────────────────────────────────
+    // ─── Order Logic ─────────────────────────────────────────────────────────
     private void addToOrder(MenuItem item) {
         for (OrderItem oi : currentOrder) {
             if (oi.item.name.equals(item.name)) { 
@@ -565,44 +687,70 @@ public class RestaurantPOS extends JFrame {
         for (OrderItem oi : currentOrder)
             orderTableModel.addRow(new Object[]{
                 oi.item.name, oi.quantity,
-                String.format("$%.2f", oi.item.price * oi.quantity)});
+                String.format("KSH %.0f", oi.item.price * oi.quantity)});
         updateTotals();
+        
+        // Update item count
+        int totalItems = currentOrder.stream().mapToInt(o -> o.quantity).sum();
+        JPanel header = (JPanel) orderPanel.getComponent(0);
+        JLabel itemCount = (JLabel) ((JPanel) header.getComponent(0)).getComponent(1);
+        itemCount.setText(totalItems + (totalItems == 1 ? " item" : " items"));
     }
 
     private void updateTotals() {
         double sub = currentOrder.stream().mapToDouble(o -> o.item.price * o.quantity).sum();
         double tax = sub * 0.095;
-        subtotalLabel.setText(String.format("$%.2f", sub));
-        taxLabel.setText(String.format("$%.2f", tax));
-        totalLabel.setText(String.format("$%.2f", sub + tax));
+        subtotalLabel.setText(String.format("KSH %.0f", sub));
+        taxLabel.setText(String.format("KSH %.0f", tax));
+        totalLabel.setText(String.format("KSH %.0f", sub + tax));
     }
 
     private void updateStatusBar() {
         int n = currentOrder.stream().mapToInt(o -> o.quantity).sum();
-        statusBar.setText("✓ Ready | Table " + tableNumber + " | Items: " + n);
+        statusBar.setText("✓ Ready • " + n + " item" + (n != 1 ? "s" : "") + " in order");
     }
 
     private void changeTable(int delta) {
         tableNumber = Math.max(1, tableNumber + delta);
-        tableLabel.setText("T" + tableNumber);
+        tableLabel.setText(String.valueOf(tableNumber));
         updateStatusBar();
     }
 
     private void newOrder() {
         if (JOptionPane.showConfirmDialog(this,
-                "Start a new order? Current order will be cleared.", "New Order",
-                JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                "Start a fresh order? Current cart will be cleared.", "New Order",
+                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
             currentOrder.clear();
             updateOrderTable();
-            orderNumLabel.setText("Order #" + ++orderCounter);
+            orderCounter++;
+            orderNumLabel.setText("Order #" + orderCounter);
             updateStatusBar();
+            
+            // Show success notification
+            JOptionPane.showMessageDialog(this, 
+                "New order created! Table " + tableNumber + " is ready.",
+                "Order Started", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+
+    private void clearOrder() {
+        if (!currentOrder.isEmpty()) {
+            int confirm = JOptionPane.showConfirmDialog(this,
+                "Clear entire order?", "Clear Order",
+                JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+            if (confirm == JOptionPane.YES_OPTION) {
+                currentOrder.clear();
+                updateOrderTable();
+                updateStatusBar();
+            }
         }
     }
 
     private void editSelectedItem() {
         int row = orderTable.getSelectedRow();
         if (row < 0 || row >= currentOrder.size()) {
-            JOptionPane.showMessageDialog(this, "Please select an item to edit."); 
+            JOptionPane.showMessageDialog(this, "Please select an item to edit.", "No Selection", 
+                JOptionPane.INFORMATION_MESSAGE);
             return;
         }
         String s = JOptionPane.showInputDialog(this, "Enter new quantity:", currentOrder.get(row).quantity);
@@ -610,147 +758,167 @@ public class RestaurantPOS extends JFrame {
         try {
             int qty = Integer.parseInt(s.trim());
             if (qty <= 0) currentOrder.remove(row);
-            else          currentOrder.get(row).quantity = qty;
-            updateOrderTable(); 
-            updateStatusBar();
+            else currentOrder.get(row).quantity = qty;
+            updateOrderTable();
         } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(this, "Invalid quantity.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Invalid quantity. Please enter a valid number.", 
+                "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
     private void removeSelectedItem() {
         int row = orderTable.getSelectedRow();
         if (row < 0 || row >= currentOrder.size()) {
-            JOptionPane.showMessageDialog(this, "Please select an item to remove."); 
+            JOptionPane.showMessageDialog(this, "Please select an item to remove.", "No Selection", 
+                JOptionPane.INFORMATION_MESSAGE);
             return;
         }
         if (JOptionPane.showConfirmDialog(this,
-                "Remove " + currentOrder.get(row).item.name + "?", "Confirm",
+                "Remove " + currentOrder.get(row).item.name + " from order?", "Confirm Removal",
                 JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
             currentOrder.remove(row);
-            updateOrderTable(); 
+            updateOrderTable();
+        }
+    }
+
+    private void processPayment(String method) {
+        if (currentOrder.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "No items to process. Add items to cart first.", 
+                "Empty Order", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
+        String total = totalLabel.getText();
+        int confirm = JOptionPane.showConfirmDialog(this,
+            "Process payment of " + total + " via " + method + "?\n\n" +
+            "Customer will receive receipt via " + (method.equals("M-Pesa") ? "SMS" : "print/card"),
+            "Confirm Payment", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            
+        if (confirm == JOptionPane.YES_OPTION) {
+            // Generate receipt
+            String receipt = generateReceipt(method);
+            
+            JTextArea receiptArea = new JTextArea(receipt);
+            receiptArea.setFont(new Font("Monospaced", Font.PLAIN, 11));
+            receiptArea.setEditable(false);
+            receiptArea.setBackground(BG_WHITE);
+            
+            JScrollPane scrollReceipt = new JScrollPane(receiptArea);
+            scrollReceipt.setPreferredSize(new Dimension(450, 500));
+            
+            JOptionPane.showMessageDialog(this, scrollReceipt, 
+                "Payment Successful - Receipt", JOptionPane.INFORMATION_MESSAGE);
+            
+            // Start fresh order
+            currentOrder.clear();
+            updateOrderTable();
+            orderCounter++;
+            orderNumLabel.setText("Order #" + orderCounter);
             updateStatusBar();
         }
     }
 
-    private void holdOrder() {
-        JOptionPane.showMessageDialog(this, "Order held for Table " + tableNumber, "Order Held",
-                JOptionPane.INFORMATION_MESSAGE);
-    }
-
-    private void printBill() {
-        if (currentOrder.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "No items to print.", "Error", JOptionPane.ERROR_MESSAGE); 
-            return;
-        }
+    private String generateReceipt(String paymentMethod) {
         StringBuilder sb = new StringBuilder();
-        sb.append("╔══════════════════════════════════════╗\n");
-        sb.append("║      OMEGA GARDENS HOTEL             ║\n");
-        sb.append("║         RESTAURANT BILL              ║\n");
-        sb.append("╠══════════════════════════════════════╣\n");
-        sb.append(String.format("║ Order #: %-30s ║\n", orderCounter));
-        sb.append(String.format("║ Table:   %-30s ║\n", tableNumber));
-        sb.append(String.format("║ Date:    %-30s ║\n",
-                new SimpleDateFormat("dd/MM/yyyy HH:mm").format(new Date())));
-        sb.append("╠══════════════════════════════════════╣\n");
-        for (OrderItem oi : currentOrder)
-            sb.append(String.format("║ %-20s %10s ║\n",
-                    oi.item.name + " x" + oi.quantity,
-                    String.format("$%.2f", oi.item.price * oi.quantity)));
-        sb.append("╠══════════════════════════════════════╣\n");
-        sb.append(String.format("║ Subtotal:   %26s ║\n", subtotalLabel.getText()));
-        sb.append(String.format("║ Tax (9.5%%): %26s ║\n", taxLabel.getText()));
-        sb.append(String.format("║ TOTAL:      %26s ║\n", totalLabel.getText()));
-        sb.append("╚══════════════════════════════════════╝\n\nThank you!\n");
-        JTextArea ta = new JTextArea(sb.toString());
-        ta.setFont(new Font("Monospaced", Font.PLAIN, 12));
-        ta.setEditable(false);
-        JScrollPane sp = new JScrollPane(ta);
-        sp.setPreferredSize(new Dimension(500, 400));
-        JOptionPane.showMessageDialog(this, sp, "Print Bill", JOptionPane.INFORMATION_MESSAGE);
+        sb.append("╔════════════════════════════════════════════╗\n");
+        sb.append("║         OMEGA GARDENS HOTEL                ║\n");
+        sb.append("║            OFFICIAL RECEIPT                ║\n");
+        sb.append("╠════════════════════════════════════════════╣\n");
+        sb.append(String.format("║ Order #: %-36s ║\n", orderCounter));
+        sb.append(String.format("║ Table:   %-36s ║\n", tableNumber));
+        sb.append(String.format("║ Date:    %-36s ║\n", 
+            new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(new Date())));
+        sb.append(String.format("║ Payment: %-36s ║\n", paymentMethod));
+        sb.append("╠════════════════════════════════════════════╣\n");
+        sb.append("║ ITEMS                                      ║\n");
+        for (OrderItem oi : currentOrder) {
+            String itemLine = String.format("  %s x%d", oi.item.name, oi.quantity);
+            String priceLine = String.format("KSH %.0f", oi.item.price * oi.quantity);
+            sb.append(String.format("║ %-28s %10s ║\n", itemLine, priceLine));
+        }
+        sb.append("╠════════════════════════════════════════════╣\n");
+        sb.append(String.format("║ Subtotal:                 %10s ║\n", subtotalLabel.getText()));
+        sb.append(String.format("║ Tax (9.5%%):               %10s ║\n", taxLabel.getText()));
+        sb.append("╠════════════════════════════════════════════╣\n");
+        sb.append(String.format("║ TOTAL PAYABLE:            %10s ║\n", totalLabel.getText()));
+        sb.append("╚════════════════════════════════════════════╝\n\n");
+        sb.append("          Thank you for dining with us!\n");
+        sb.append("               Visit Again!\n");
+        if (paymentMethod.equals("M-Pesa")) {
+            sb.append("\n     M-Pesa Confirmation Sent to Phone\n");
+        }
+        return sb.toString();
     }
 
-    private void processPayment() {
-        if (currentOrder.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "No items to pay for.", "Error", JOptionPane.ERROR_MESSAGE); 
-            return;
-        }
-        String[] opts = {"Cash", "Card", "Mobile Payment"};
-        int choice = JOptionPane.showOptionDialog(this,
-                "Total: " + totalLabel.getText() + "\nSelect payment method:",
-                "Payment", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE,
-                null, opts, opts[0]);
-        if (choice >= 0) {
-            JOptionPane.showMessageDialog(this,
-                    "Payment successful via " + opts[choice] +
-                    "\nAmount: " + totalLabel.getText() +
-                    "\nThank you for dining at Omega Gardens Hotel!",
-                    "Success", JOptionPane.INFORMATION_MESSAGE);
-            newOrder();
-        }
+    // ─── UI Helper Methods ────────────────────────────────────────────────────
+    private JButton createIconButton(String text) {
+        JButton btn = new JButton(text);
+        btn.setFont(new Font("Segoe UI", Font.BOLD, 16));
+        btn.setBackground(BG_SOFT_GRAY);
+        btn.setForeground(TEXT_DARK);
+        btn.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
+        btn.setFocusPainted(false);
+        btn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        return btn;
     }
 
-    // ─── Helpers ─────────────────────────────────────────────────────────────
-    private void styleTextField(JTextField f, String ph) {
-        f.setBackground(BG_CARD);
-        f.setForeground(TEXT_SECONDARY);
-        f.setCaretColor(ACCENT_BLUE);
-        f.setBorder(BorderFactory.createCompoundBorder(
-            new LineBorder(DIVIDER, 1, true), new EmptyBorder(8, 10, 8, 10)));
-        f.setText(ph);
-        f.addFocusListener(new FocusAdapter() {
-            public void focusGained(FocusEvent e) {
-                if (f.getText().equals(ph)) { f.setText(""); f.setForeground(TEXT_PRIMARY); }
+    private JButton createGradientButton(String text, Color color1, Color color2) {
+        JButton btn = new JButton(text) {
+            @Override
+            protected void paintComponent(Graphics g) {
+                Graphics2D g2d = (Graphics2D) g;
+                g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+                GradientPaint gp = new GradientPaint(0, 0, color1, getWidth(), 0, color2);
+                g2d.setPaint(gp);
+                g2d.fillRoundRect(0, 0, getWidth(), getHeight(), 10, 10);
+                super.paintComponent(g);
             }
-            public void focusLost(FocusEvent e) {
-                if (f.getText().isEmpty()) { f.setText(ph); f.setForeground(TEXT_SECONDARY); }
-            }
-        });
+        };
+        btn.setFont(new Font("Segoe UI", Font.BOLD, 12));
+        btn.setForeground(Color.WHITE);
+        btn.setBorderPainted(false);
+        btn.setContentAreaFilled(false);
+        btn.setFocusPainted(false);
+        btn.setOpaque(false);
+        btn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        btn.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
+        return btn;
+    }
+
+    private JButton createOutlineButton(String text, Color color) {
+        JButton btn = new JButton(text);
+        btn.setFont(new Font("Segoe UI", Font.BOLD, 12));
+        btn.setForeground(color);
+        btn.setBackground(Color.WHITE);
+        btn.setBorder(BorderFactory.createLineBorder(color, 1, true));
+        btn.setFocusPainted(false);
+        btn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        return btn;
     }
 
     private void styleOrderTable(JTable t) {
-        t.setBackground(BG_CARD);
-        t.setForeground(TEXT_PRIMARY);
+        t.setBackground(Color.WHITE);
+        t.setForeground(TEXT_DARK);
         t.setGridColor(DIVIDER);
-        t.setRowHeight(32);
-        t.setFont(new Font("SansSerif", Font.PLAIN, 12));
-        t.getTableHeader().setBackground(BG_PANEL);
-        t.getTableHeader().setForeground(TEXT_SECONDARY);
-        t.getTableHeader().setFont(new Font("SansSerif", Font.BOLD, 12));
-        t.setSelectionBackground(ACCENT_BLUE);
-        t.setSelectionForeground(Color.WHITE);
+        t.setRowHeight(40);
+        t.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+        t.getTableHeader().setBackground(BG_SOFT_GRAY);
+        t.getTableHeader().setForeground(TEXT_DARK);
+        t.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 13));
+        t.setSelectionBackground(new Color(52, 152, 219, 50));
+        t.setSelectionForeground(TEXT_DARK);
         t.getColumnModel().getColumn(0).setPreferredWidth(150);
-        t.getColumnModel().getColumn(1).setPreferredWidth(50);
-        t.getColumnModel().getColumn(2).setPreferredWidth(80);
-    }
-
-    private JButton iconBtn(String text) {
-        JButton btn = new JButton(text);
-        btn.setFont(new Font("SansSerif", Font.BOLD, 14));
-        btn.setBackground(BG_CARD);
-        btn.setForeground(TEXT_PRIMARY);
-        btn.setFocusPainted(false);
-        btn.setBorder(new EmptyBorder(4, 8, 4, 8));
-        btn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        return btn;
-    }
-
-    private JButton roundBtn(String text, Color bg, Color fg) {
-        JButton btn = new JButton(text);
-        btn.setBackground(bg);
-        btn.setForeground(fg);
-        btn.setFocusPainted(false);
-        btn.setBorder(new EmptyBorder(8, 16, 8, 16));
-        btn.setFont(new Font("SansSerif", Font.BOLD, 12));
-        btn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        return btn;
+        t.getColumnModel().getColumn(1).setPreferredWidth(60);
+        t.getColumnModel().getColumn(2).setPreferredWidth(100);
+        t.setShowVerticalLines(false);
     }
 
     // ─── Entry point ─────────────────────────────────────────────────────────
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            try { UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName()); }
-            catch (Exception ignored) {}
+            try {
+                UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+            } catch (Exception ignored) {}
             new RestaurantPOS();
         });
     }
@@ -760,14 +928,16 @@ public class RestaurantPOS extends JFrame {
 class MenuItem {
     String name;
     double price;
-    String emoji;          // fallback emoji if image not found
-    String imageFile;      // filename of the image in the "images" folder
+    String emoji;
+    String imageFile;
+    String description;
 
-    MenuItem(String name, double price, String emoji, String imageFile) {
-        this.name      = name;
-        this.price     = price;
-        this.emoji     = emoji;
+    MenuItem(String name, double price, String emoji, String imageFile, String description) {
+        this.name = name;
+        this.price = price;
+        this.emoji = emoji;
         this.imageFile = imageFile;
+        this.description = description;
     }
 }
 
